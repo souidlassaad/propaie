@@ -1,0 +1,246 @@
+<p-dialog [(visible)]="pretDialog" [style]="{width: '70%'}" header="pret " [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content" *ngIf="authService.isAdmin()"  (ngsubmit)="insertData()"> 
+
+
+
+ <div class="p-grid">
+<div class="p-col-12">
+   
+<div class="p-fluid p-formgrid p-grid">
+    <div class="p-field p-col">
+        <label for="numero">Numero</label>
+        <input id="numero"  name="dt" [(ngModel)]="pret.numero" type="number" pInputText required autofocus/> 
+        <small class="p-error" *ngIf="submitted && !pret.numero">numero is required.</small>
+    </div>
+    <div class="p-field p-col">
+        <label for="designation">Designation</label>
+        <input id="designation"   name="an" [(ngModel)]="pret.designation" type="text" pInputText required autofocus/> 
+        <small class="p-error" *ngIf="submitted && !pret.designation">designation is required.</small>
+    </div>
+</div>
+
+<div class="p-fluid p-formgrid p-grid">
+    <div class="p-field p-col">
+        <label for="employepr">Employe</label>
+        <p-dropdown [options]="employees" [(ngModel)]="selectedEmploye" [(ngModel)]="pret.employepr" optionLabel="mat" (onChange)="onEmployeChange($event)" optionValue="id"></p-dropdown> 
+    </div>
+    <div class="p-field p-col">
+        <label for="montant">Montant </label>
+        <p-inputNumber [(ngModel)]="value1" [showButtons]="true" mode="currency" currency="USD" [(ngModel)]="pret.montant"></p-inputNumber>
+        <small class="p-error" *ngIf="submitted && !pret.montant">montant is required.</small>
+    </div>
+</div>
+
+<div class="p-fluid p-formgrid p-grid">
+    <div class="p-field p-col">
+        <label for="nbrmois">Nombre des mois</label>
+        <input id="nbrmois"  name="mont" [(ngModel)]="pret.nbrmois" type="number" pInputText required autofocus/> 
+        <small class="p-error" *ngIf="submitted && !pret.nbrmois">nombre des mois is required.</small>
+    </div>
+    <div class="p-field p-col">
+        <label for="mntmois">montant par mois</label>
+        <p-inputNumber [(ngModel)]="value1" [showButtons]="true" mode="currency" currency="USD" [(ngModel)]="pret.mntmois"></p-inputNumber>
+        <small class="p-error" *ngIf="submitted && !pret.mntmois">montant mois is required.</small>
+    </div>
+</div>
+
+<div class="p-fluid p-formgrid p-grid">
+    <div class="p-field p-col">
+        <label for="dateedition">Date edition</label>
+        <input id="dateedition"  name="dt" [(ngModel)]="pret.dateedition" type="date" pInputText required autofocus/> 
+        <small class="p-error" *ngIf="submitted && !pret.dateedition">date edition is required.</small>
+    </div>
+    <div class="p-field p-col">
+        <label for="active">Active</label>
+        <input id="active"   name="an" [(ngModel)]="pret.active" type="text" pInputText required autofocus/> 
+        <small class="p-error" *ngIf="submitted && !pret.active">active is required.</small>
+    </div>
+</div>
+
+
+<div class="p-fluid p-formgrid p-grid">
+    <div class="p-field p-col">
+        <label for="premierremb">premier remboursement</label>
+        <input id="premierremb"  name="dt" [(ngModel)]="pret.premierremb" type="date" pInputText required autofocus/> 
+        <small class="p-error" *ngIf="submitted && !pret.premierremb">premier remb is required.</small>
+    </div>
+    <div class="p-field p-col">
+        <label for="dernierremb">dernier remboursement</label>
+        <input id="dernierremb"   name="an" [(ngModel)]="pret.dernierremb" type="date" pInputText required autofocus/> 
+        <small class="p-error" *ngIf="submitted && !pret.dernierremb">dernier remb is required.</small>
+    </div>
+</div>
+
+<button pButton type="button"  class="p-button-text" label="save" *ngIf="authService.isAdmin()" (click)="insertData()"></button>
+<button pButton type="button"  class="p-button-text" label = "cancel" (click)="hideDialog()"></button>
+
+
+
+
+
+</div></div>
+</ng-template>
+</p-dialog>
+<p-divider></p-divider>
+
+
+<p-toast></p-toast>
+
+<div class="card">
+
+
+    <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+           
+        </ng-template>
+
+    </p-toolbar>
+
+<p-table #dt [value]="prets"  [globalFilterFields]="['numero']">
+    <ng-template pTemplate="caption">
+                        
+        <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+
+            <h5 class="p-m-0">Pret</h5>
+            <div class="search-input-wrapper">
+            <span class="p-input-icon-left">
+            <p-button icon="pi pi-search"></p-button>
+            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+            </span>
+</div></div>
+</ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>Numero</th>
+            <th>Designation</th>
+            <th>Employee</th>
+            <th>Montant</th>
+            <th>Nombre de mois</th>
+            <th>Montant mois</th>
+            <th>Date edition</th>
+            <th>Active</th>
+            <th>Premiere remboursement</th>
+            <th>Derniere remboursement</th>
+            <th>options</th>
+           
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-pret>
+        <tr>
+            <td>{{pret.numero}}</td>
+             <td>{{pret.designation}}</td>
+             <td>{{pret.employepr}}</td>
+            <td>{{pret.montant}}</td>
+            <td>{{pret.nbrmois}}</td>
+            <td>{{pret.mntmois}}</td>
+            <td>{{pret.dateedition}}</td>    
+            <td>{{pret.active}}</td>    
+            <td>{{pret.premierremb}}</td>    
+            <td>{{pret.dernierremb}}</td>       
+          
+         
+          
+            <td>
+                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"   *ngIf="authService.isAdmin()" (click)="editPret(pret)"></button>
+                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"  *ngIf="authService.isAdmin()" (click)="deleteData(pret.id)"></button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            In total there are {{prets ? prets.length : 0 }} prets.
+        </div>
+    </ng-template>
+</p-table>
+
+</div>
+
+<p-dialog [(visible)]="updatepretDialog" [style]="{width: '450px'}" header="prets  Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content"  *ngIf="authService.isAdmin()" (ngsubmit)="updateData()">
+       
+        <div class="p-grid">
+            <div class="p-col-12">
+
+
+
+                <div class="p-fluid p-formgrid p-grid">
+                    <div class="p-field p-col">
+                        <label for="numero">Numero</label>
+                        <input id="numero"  name="dt" [(ngModel)]="pret.numero" type="number" pInputText required autofocus/> 
+                        <small class="p-error" *ngIf="submitted && !pret.numero">numero is required.</small>
+                    </div>
+                    <div class="p-field p-col">
+                        <label for="designation">designation</label>
+                        <input id="designation"   name="an" [(ngModel)]="pret.designation" type="text" pInputText required autofocus/> 
+                        <small class="p-error" *ngIf="submitted && !pret.designation">designation is required.</small>
+                    </div>
+                </div>
+                
+                <div class="p-fluid p-formgrid p-grid">
+                    <div class="p-field p-col">
+                        <label for="employepr">employe</label>
+                        <p-dropdown [options]="employees" [(ngModel)]="selectedEmploye" [(ngModel)]="pret.employepr" optionLabel="mat" (onChange)="onEmployeChange($event)" optionValue="id"></p-dropdown> 
+                    </div>
+                    <div class="p-field p-col">
+                        <label for="montant">montant </label>
+                        <p-inputNumber [(ngModel)]="value1" [showButtons]="true" mode="currency" currency="USD" [(ngModel)]="pret.montant"></p-inputNumber>
+                        <small class="p-error" *ngIf="submitted && !pret.montant">montant is required.</small>
+                    </div>
+                </div>
+                
+                <div class="p-fluid p-formgrid p-grid">
+                    <div class="p-field p-col">
+                        <label for="nbrmois">Nombre des mois</label>
+                        <input id="nbrmois"  name="mont" [(ngModel)]="pret.nbrmois" type="number" pInputText required autofocus/> 
+                        <small class="p-error" *ngIf="submitted && !pret.nbrmois">nombre des mois is required.</small>
+                    </div>
+                    <div class="p-field p-col">
+                        <label for="mntmois">Nontant mois</label>
+                        <p-inputNumber [(ngModel)]="value1" [showButtons]="true" mode="currency" currency="USD" [(ngModel)]="pret.mntmois"></p-inputNumber> 
+                        <small class="p-error" *ngIf="submitted && !pret.mntmois">montant mois is required.</small>
+                    </div>
+                </div>
+                
+                <div class="p-fluid p-formgrid p-grid">
+                    <div class="p-field p-col">
+                        <label for="dateedition">Date edition</label>
+                        <input id="dateedition"  name="dt" [(ngModel)]="pret.dateedition" type="date" pInputText required autofocus/> 
+                        <small class="p-error" *ngIf="submitted && !pret.dateedition">date edition is required.</small>
+                    </div>
+                    <div class="p-field p-col">
+                        <label for="active">Active</label>
+                        <input id="active"   name="an" [(ngModel)]="pret.active" type="text" pInputText required autofocus/> 
+                        <small class="p-error" *ngIf="submitted && !pret.active">active is required.</small>
+                    </div>
+                </div>
+                
+                
+                <div class="p-fluid p-formgrid p-grid">
+                    <div class="p-field p-col">
+                        <label for="premierremb">premier remboursement</label>
+                        <input id="premierremb"  name="dt" [(ngModel)]="pret.premierremb" type="date" pInputText required autofocus/> 
+                        <small class="p-error" *ngIf="submitted && !pret.premierremb">premier remb is required.</small>
+                    </div>
+                    <div class="p-field p-col">
+                        <label for="dernierremb">dernier remboursement</label>
+                        <input id="dernierremb"   name="an" [(ngModel)]="pret.dernierremb" type="date" pInputText required autofocus/> 
+                        <small class="p-error" *ngIf="submitted && !pret.dernierremb">dernier remb is required.</small>
+                    </div>
+                </div>
+
+
+            </div></div>
+    
+    
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="updateData()"></button>
+       
+        </ng-template>
+    
+    </p-dialog>
+    
+    <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+    

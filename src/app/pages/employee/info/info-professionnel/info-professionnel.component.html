@@ -1,0 +1,490 @@
+
+<p-dialog [(visible)]="infoprofDialog" [style]="{width: '100%'}" header="infoprof Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content" *ngIf="authService.isAdmin()" (ngsubmit)="insertData()">
+
+
+        <div class="card">
+            <p-toolbar styleClass="p-mb-4">
+             <h5 class="p-m-0">Classification</h5>
+                 </p-toolbar>
+        
+        
+          
+          <div class="p-fluid p-formgrid p-grid">
+
+            <div class="p-field p-col">
+                <label for="employei">employe</label>
+                <p-dropdown [options]="employees" [(ngModel)]="selectedEmploye" [(ngModel)]="infoprof.employei" optionLabel="mat" (onChange)="onEmployeChange($event)" optionValue="id"></p-dropdown> 
+            </div>
+            <div class="p-field p-col">
+                <label for="categorie">Categorie</label>
+                <input id="categorie"  name="a"  type="text" [(ngModel)]="infoprof.categorie" pInputText required autofocus /> 
+                <small class="p-error" *ngIf="submitted && !infoprof.categorie">champ required.</small>
+            </div>
+            <div class="p-field p-col">
+                <label for="service">Service </label>
+                <input id="service"  name="b" type="text" [(ngModel)]="infoprof.service" pInputText required autofocus /> 
+                <small class="p-error" *ngIf="submitted && !infoprof.service">champ required.</small>
+            </div>
+          
+           </div>
+        
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col">
+                <label for="qualification">qualification</label>
+                <input id="qualification"  name="d"  type="text" [(ngModel)]="infoprof.qualification" pInputText required autofocus />  
+                <small class="p-error" *ngIf="submitted && !infoprof.qualification">champ required.</small>
+            </div>
+            <div class="p-field p-col">
+                <label for="echelon">echelon </label>
+                <input id="echelon"  name="c" type="text" [(ngModel)]="infoprof.echelon" pInputText required autofocus /> 
+                <small class="p-error" *ngIf="submitted && !infoprof.echelon">champ required.</small>
+            </div>
+            <div class="p-field p-col">
+                <label for="position">position </label>
+                <input id="position"  name="f" type="text" [(ngModel)]="infoprof.position" pInputText required autofocus /> 
+                <small class="p-error" *ngIf="submitted && !infoprof.position">champ required.</small>
+            </div>
+         </div>
+        
+        </div>
+<div class="card">
+    <p-toolbar styleClass="p-mb-4">
+     <h5 class="p-m-0">Salaire/Assurance</h5>
+         </p-toolbar>
+
+
+  
+<div class="p-fluid p-formgrid p-grid">
+    <div class="p-field p-col">
+        <label for="salaireb">salaire base</label>
+        <input id="salaireb"  name="j"  type="number" [(ngModel)]="infoprof.salaireb" pInputText required autofocus /> 
+        <small class="p-error" *ngIf="submitted && !infoprof.salaireb">champ required.</small>
+    </div>
+    <div class="p-field p-col">
+        <label for="opposition">opposition </label>
+        <input id="opposition"  name="h" type="text" [(ngModel)]="infoprof.opposition" pInputText required autofocus /> 
+        <small class="p-error" *ngIf="submitted && !infoprof.opposition">champ required.</small>
+    </div>
+    <div class="p-field p-col">
+        <label for="dcmensuel">DC mensuel </label>
+        <input id="dcmensuel"  name="i" type="text" [(ngModel)]="infoprof.dcmensuel" pInputText required autofocus /> 
+        <small class="p-error" *ngIf="submitted && !infoprof.dcmensuel">champ required.</small>
+    </div>
+</div>
+
+
+
+<div class="p-fluid p-formgrid p-grid">
+    <div class="p-field p-col">
+        <label for="numordre">num ordre</label>
+        <input id="numordre"  name="g"  type="text" [(ngModel)]="infoprof.numordre" pInputText required autofocus /> 
+        <small class="p-error" *ngIf="submitted && !infoprof.numordre">champ required.</small>
+    </div>
+    <div class="p-field p-col">
+        <label for="rapport">rapport </label>
+        <input id="rapport"  name="k" type="text" [(ngModel)]="infoprof.rapport" pInputText required autofocus /> 
+        <small class="p-error" *ngIf="submitted && !infoprof.rapport">champ required.</small>
+    </div>
+   
+</div>
+
+
+
+</div>
+
+
+
+<div class="card">
+    <p-toolbar styleClass="p-mb-4">
+     <h5 class="p-m-0">Cnss/Banque</h5>
+         </p-toolbar>
+
+
+  
+<div class="p-fluid p-formgrid p-grid">
+    <div class="p-field p-col">
+        <label for="numcnss">num cnss</label>
+        <input id="numcnss"  name="m"  type="text" [(ngModel)]="infoprof.numcnss" pInputText required autofocus /> 
+        <small class="p-error" *ngIf="submitted && !infoprof.numcnss">champ required.</small>
+    </div>
+    <div class="p-field p-col">
+        <label for="tauxcnss">Taux cnss </label>
+        <input id="tauxcnss"  name="n" type="text" [(ngModel)]="infoprof.tauxcnss" pInputText required autofocus /> 
+        <small class="p-error" *ngIf="submitted && !infoprof.tauxcnss">champ required.</small>
+    </div>
+  
+</div>
+
+
+<div class="p-fluid p-formgrid p-grid">
+    <div class="p-field p-col">
+        <label for="banque">banque</label>
+        <input id="banque"  name="p"  type="text" [(ngModel)]="infoprof.banque" pInputText required autofocus /> 
+        <small class="p-error" *ngIf="submitted && !infoprof.banque">champ required.</small>
+    </div>
+    <div class="p-field p-col">
+        <label for="numass">Num assurance </label>
+        <input id="numass"  name="q" type="text" [(ngModel)]="infoprof.numass" pInputText required autofocus /> 
+          <small class="p-error" *ngIf="submitted && !infoprof.numass">champ required.</small>
+    </div>
+    <div class="p-field p-col">
+        <label for="tauxemp">Taux info prof </label>
+        <input id="tauxemp"  name="r" type="text" [(ngModel)]="infoprof.tauxemp" pInputText required autofocus /> 
+        <small class="p-error" *ngIf="submitted && !infoprof.tauxemp">champ required.</small>
+    </div>
+  
+</div>
+
+
+
+
+   
+   
+
+
+
+<div class="p-fluid p-formgrid p-grid">
+  
+   
+    <div class="p-field p-col">
+        <label for="accidentt">Accident travail </label>
+        <input id="accidentt"  name="y" type="text" [(ngModel)]="infoprof.accidentt" pInputText required autofocus /> 
+        <small class="p-error" *ngIf="submitted && !infoprof.accidentt">champ required.</small>
+    </div>
+    <div class="p-field p-col">
+        <label for="rib">rib</label>
+        <input id="rib"  name="t"  type="text" [(ngModel)]="infoprof.rib" pInputText required autofocus /> 
+        <small class="p-error" *ngIf="submitted && !infoprof.rib">champ required.</small>
+    </div>
+</div>
+
+</div>
+
+
+<div class="card">
+    <p-toolbar styleClass="p-mb-4">
+     <h5 class="p-m-0">Type contrat/Exploitation</h5>
+         </p-toolbar>
+
+
+  
+
+   
+    <div class="p-field p-col">
+        <label for="virement">virement salaire </label>
+        <input id="virement"  name="a1" type="text" [(ngModel)]="infoprof.virement" pInputText required autofocus /> 
+        <small class="p-error" *ngIf="submitted && !infoprof.virement">champ required.</small>
+  
+  </div>
+
+</div>
+
+<p-divider></p-divider>
+
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" *ngIf="authService.isAdmin()" (click)="insertData()"></button>
+
+</ng-template>
+</p-dialog>
+
+    <p-toast></p-toast>
+
+<div class="card">
+
+
+    <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+           
+        </ng-template>
+
+    </p-toolbar>
+    <p-table #dt [value]="infos"  [globalFilterFields]="['categorie','echelon']">
+        <ng-template pTemplate="caption">
+                        
+            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+    
+                <h5 class="p-m-0">Infos Professionel</h5>
+                <div class="search-input-wrapper">
+                <span class="p-input-icon-left">
+                <p-button icon="pi pi-search"></p-button>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                </span>
+    </div></div>
+    </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th>employe</th>
+                <th>categorie</th>
+                <th>service</th>
+                <th>echelon</th>
+                <th>position</th>
+                <th>qualification</th>
+                <th>salair</th>
+                <th>opposi</th>
+                <th>dcmens</th>
+                <th>numordre</th>
+                <th>rapport</th>
+                <th>numcnss</th>
+               
+                <th>tauxcnss</th>
+                <th>numass</th>
+                <th>banque</th>
+                <th>tauxemployeur</th>
+               
+                <th>rib</th>
+               
+                <th>accidentt</th>
+                
+                <th>virement</th>
+                <th>options</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-infoprof>
+            <tr>
+                <td>{{infoprof.categorie}}</td>
+                 <td>{{infoprof.service}}</td>
+                <td>{{infoprof.echelon}}</td>
+                <td>{{infoprof.qualification}}</td>
+            
+                <td>{{infoprof.position}}</td>       
+                <td>{{infoprof.salaireb}}</td>
+                <td>{{infoprof.opposition}}</td>
+                <td>{{infoprof.dcmensuel}}</td>
+                <td>{{infoprof.numordre}}</td>
+                <td>{{infoprof.rapport}}</td>
+                <td>{{infoprof.numcnss}}</td>
+              
+                <td>{{infoprof.tauxcnss}}</td>
+                <td>{{infoprof.numass}}</td>
+                <td>{{infoprof.banque}}</td>
+                <td>{{infoprof.tauxemp}}</td>
+                <td>{{infoprof.employei}}</td>
+               
+                <td>{{infoprof.rib}}</td>
+               
+               
+                <td>{{infoprof.accidentt}}</td>
+              
+                <td>{{infoprof.virement}}</td>
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"   *ngIf="authService.isAdmin()" (click)="editInfoprof(infoprof)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"  *ngIf="authService.isAdmin()" (click)="deleteData(infoprof.id)"></button>
+                </td>
+               
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{infos ? infos.length : 0 }} infos.
+            </div>
+        </ng-template>
+    </p-table>
+
+
+
+
+
+
+
+    <p-dialog [(visible)]="updateinfoprofDialog" [style]="{width: '450px'}" header="infoprof Details" [modal]="true" styleClass="p-fluid">
+        <ng-template pTemplate="content"  *ngIf="authService.isAdmin()" (ngsubmit)="updateData()">
+           
+          
+            <div class="card">
+                <p-toolbar styleClass="p-mb-4">
+                 <h5 class="p-m-0">Classification</h5>
+                     </p-toolbar>
+            
+            
+              
+              <div class="p-fluid p-formgrid p-grid">
+
+                <div class="p-field p-col">
+                    <label for="employei">employe</label>
+                    <p-dropdown [options]="employees" [(ngModel)]="selectedEmploye" [(ngModel)]="infoprof.employei" optionLabel="mat" (onChange)="onEmployeChange($event)" optionValue="id"></p-dropdown> 
+                </div>
+                <div class="p-field p-col">
+                    <label for="categorie">Categorie</label>
+                    <input id="categorie"  name="a"  type="text" [(ngModel)]="infoprof.categorie" pInputText required autofocus /> 
+                    <small class="p-error" *ngIf="submitted && !infoprof.categorie">champ required.</small>
+                </div>
+                <div class="p-field p-col">
+                    <label for="service">Service </label>
+                    <input id="service"  name="b" type="text" [(ngModel)]="infoprof.service" pInputText required autofocus /> 
+                    <small class="p-error" *ngIf="submitted && !infoprof.service">champ required.</small>
+                </div>
+              
+               </div>
+            
+            <div class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col">
+                    <label for="qualification">qualification</label>
+                    <input id="qualification"  name="d"  type="text" [(ngModel)]="infoprof.qualification" pInputText required autofocus />  
+                    <small class="p-error" *ngIf="submitted && !infoprof.qualification">champ required.</small>
+                </div>
+                <div class="p-field p-col">
+                    <label for="echelon">echelon </label>
+                    <input id="echelon"  name="c" type="text" [(ngModel)]="infoprof.echelon" pInputText required autofocus /> 
+                    <small class="p-error" *ngIf="submitted && !infoprof.echelon">champ required.</small>
+                </div>
+                <div class="p-field p-col">
+                    <label for="position">position </label>
+                    <input id="position"  name="f" type="text" [(ngModel)]="infoprof.position" pInputText required autofocus /> 
+                    <small class="p-error" *ngIf="submitted && !infoprof.position">champ required.</small>
+                </div>
+             </div>
+            
+            </div>
+            
+            
+            <div class="card">
+                <p-toolbar styleClass="p-mb-4">
+                 <h5 class="p-m-0">Salaire/Assurance</h5>
+                     </p-toolbar>
+            
+            
+              
+            <div class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col">
+                    <label for="salaireb">salaire base</label>
+                    <input id="salaireb"  name="j"  type="number" [(ngModel)]="infoprof.salaireb" pInputText required autofocus /> 
+                    <small class="p-error" *ngIf="submitted && !infoprof.salaireb">champ required.</small>
+                </div>
+                <div class="p-field p-col">
+                    <label for="opposition">opposition </label>
+                    <input id="opposition"  name="h" type="text" [(ngModel)]="infoprof.opposition" pInputText required autofocus /> 
+                    <small class="p-error" *ngIf="submitted && !infoprof.opposition">champ required.</small>
+                </div>
+                <div class="p-field p-col">
+                    <label for="dcmensuel">DC mensuel </label>
+                    <input id="dcmensuel"  name="i" type="text" [(ngModel)]="infoprof.dcmensuel" pInputText required autofocus /> 
+                    <small class="p-error" *ngIf="submitted && !infoprof.dcmensuel">champ required.</small>
+                </div>
+            </div>
+            
+            
+            
+            <div class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col">
+                    <label for="numordre">num ordre</label>
+                    <input id="numordre"  name="g"  type="text" [(ngModel)]="infoprof.numordre" pInputText required autofocus /> 
+                    <small class="p-error" *ngIf="submitted && !infoprof.numordre">champ required.</small>
+                </div>
+                <div class="p-field p-col">
+                    <label for="rapport">rapport </label>
+                    <input id="rapport"  name="k" type="text" [(ngModel)]="infoprof.rapport" pInputText required autofocus /> 
+                    <small class="p-error" *ngIf="submitted && !infoprof.rapport">champ required.</small>
+                </div>
+               
+            </div>
+            
+            
+            
+            </div>
+            
+            
+            
+            <div class="card">
+                <p-toolbar styleClass="p-mb-4">
+                 <h5 class="p-m-0">Cnss/Banque</h5>
+                     </p-toolbar>
+            
+            
+              
+            <div class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col">
+                    <label for="numcnss">num cnss</label>
+                    <input id="numcnss"  name="m"  type="text" [(ngModel)]="infoprof.numcnss" pInputText required autofocus /> 
+                    <small class="p-error" *ngIf="submitted && !infoprof.numcnss">champ required.</small>
+                </div>
+                <div class="p-field p-col">
+                    <label for="tauxcnss">Taux cnss </label>
+                    <input id="tauxcnss"  name="n" type="text" [(ngModel)]="infoprof.tauxcnss" pInputText required autofocus /> 
+                    <small class="p-error" *ngIf="submitted && !infoprof.tauxcnss">champ required.</small>
+                </div>
+              
+            </div>
+            
+            
+            <div class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col">
+                    <label for="banque">banque</label>
+                    <input id="banque"  name="p"  type="text" [(ngModel)]="infoprof.banque" pInputText required autofocus /> 
+                    <small class="p-error" *ngIf="submitted && !infoprof.banque">champ required.</small>
+                </div>
+                <div class="p-field p-col">
+                    <label for="numass">Num assurance </label>
+                    <input id="numass"  name="q" type="text" [(ngModel)]="infoprof.numass" pInputText required autofocus /> 
+                      <small class="p-error" *ngIf="submitted && !infoprof.numass">champ required.</small>
+                </div>
+                <div class="p-field p-col">
+                    <label for="tauxemp">Taux info prof </label>
+                    <input id="tauxemp"  name="r" type="text" [(ngModel)]="infoprof.tauxemp" pInputText required autofocus /> 
+                    <small class="p-error" *ngIf="submitted && !infoprof.tauxemp">champ required.</small>
+                </div>
+              
+            </div>
+            
+            
+            
+            
+               
+               
+            
+            
+            
+            <div class="p-fluid p-formgrid p-grid">
+              
+                <div class="p-field p-col">
+                    <label for="accidentt">Accident travail </label>
+                    <input id="accidentt"  name="y" type="text" [(ngModel)]="infoprof.accidentt" pInputText required autofocus /> 
+                    <small class="p-error" *ngIf="submitted && !infoprof.accidentt">champ required.</small>
+                </div>
+                <div class="p-field p-col">
+                    <label for="rib">rib</label>
+                    <input id="rib"  name="t"  type="text" [(ngModel)]="infoprof.rib" pInputText required autofocus /> 
+                    <small class="p-error" *ngIf="submitted && !infoprof.rib">champ required.</small>
+                </div>
+            </div>
+            
+            </div>
+            
+            
+            <div class="card">
+                <p-toolbar styleClass="p-mb-4">
+                 <h5 class="p-m-0">Type contrat/Exploitation</h5>
+                     </p-toolbar>
+            
+            
+              
+            
+               
+                <div class="p-field p-col">
+                    <label for="virement">virement salaire </label>
+                    <input id="virement"  name="a1" type="text" [(ngModel)]="infoprof.virement" pInputText required autofocus /> 
+                    <small class="p-error" *ngIf="submitted && !infoprof.virement">champ required.</small>
+              
+                 </div>
+            
+            </div>
+        
+            <ng-template pTemplate="footer">
+ 
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="updateData()"></button>
+       
+      </ng-template>
+
+     
+</ng-template>
+    </p-dialog>
+    <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+    
+  
+    
+
+
+

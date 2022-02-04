@@ -1,0 +1,33 @@
+
+{
+    "data": [
+		{
+          "id":"1",
+         "code":"a0000",
+         "libelle":"user",
+         "default":"",
+         "superadmin":"",
+         "apporteur":"",
+         "commercial":""
+
+        },
+        {
+          "id":"2",
+         "code":"a0001",
+         "libelle":"admin",
+         "default":"",
+         "superadmin":"",
+         "apporteur":"",
+         "commercial":""
+        },
+        {
+          "id":"3",
+         "code":"a0002",
+         "libelle":"superadmin",
+         "default":"",
+         "superadmin":"",
+         "apporteur":"",
+         "commercial":""
+        }
+        ]
+    }

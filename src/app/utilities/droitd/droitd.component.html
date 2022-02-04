@@ -1,0 +1,56 @@
+
+<div class="p-grid">
+    <div class="p-col-12">
+
+
+        <div class="card">
+          <p-toolbar styleClass="p-mb-4">
+              <ng-template pTemplate="left">
+              <h5 class="p-m-0">Gestion d'acces :</h5> <div><h6 class="p-m-1">critere de filtrage</h6></div>
+              </ng-template>
+
+            </p-toolbar><br>
+       
+                     
+                  
+               
+           
+    <p-treeTable [value]="files">
+
+      
+
+   
+        <ng-template pTemplate="header">
+            <div class="p-field p-col">
+                <label for="tp" >type_utilisateur: </label>
+              <p-dropdown [options]="tp" [(ngModel)]="selectedTp" optionLabel="name"></p-dropdown>
+              
+            
+            
+                    <p-divider layout="horizontal"></p-divider><br>
+            
+                   <p-checkbox name="groupname" value="val1" placeholder="right" label="selectionnee tous" [(ngModel)]="selectedValues"></p-checkbox>
+    
+             </div>
+            <tr>
+                <th>nom_bouton</th>
+                <th>Access</th>
+               
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+            <tr>
+                <td>
+                    <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+                    {{rowData.nombouton}}
+                </td>
+                <td>  <p-inputSwitch   class="p-field p-col " [(ngModel)]="checked" ></p-inputSwitch>{{rowData.Access}}</td>
+               
+            </tr>
+        </ng-template>
+    </p-treeTable>
+    
+
+</div>
+
+</div>

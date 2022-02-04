@@ -1,0 +1,176 @@
+
+  <div class="p-grid">
+    <div class="p-col-12">
+                          <p-toast></p-toast>
+    <div class="card">
+                  <p-toolbar styleClass="p-mb-4">
+           <ng-template pTemplate="left">
+               <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+              
+           </ng-template>
+   
+        
+                  </p-toolbar>
+   
+           <p-table  #dt [value]="filiales"  [rows]="10" [paginator]="true" [globalFilterFields]="['designation']"
+              [rowHover]="true" dataKey="id"
+             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+   
+   
+           <ng-template pTemplate="caption">
+   
+               <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+   
+                   <h5 class="p-m-0">filiale</h5>
+                   <div class="search-input-wrapper">
+                   <span class="p-input-icon-left">
+                   <p-button icon="pi pi-search"></p-button>
+                   <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                   </span>
+   </div>
+               </div>
+           </ng-template>
+           <ng-template pTemplate="header">
+               <tr>
+   
+                   <th style="width: 3rem">
+                       <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                   </th>
+                   <th  pSortableColumn="codef">codef<p-sortIcon field="codef"></p-sortIcon></th>
+                   <th  pSortableColumn="designation">designation<p-sortIcon field="designation"></p-sortIcon></th>
+                   <th  pSortableColumn="societefil">societe<p-sortIcon field="societefil"></p-sortIcon></th>
+                
+                   <th>options</th>
+               </tr>
+           </ng-template>
+   
+   
+           <ng-template pTemplate="body" let-filiale>
+               <tr>
+                   <td>
+                       <p-tableCheckbox [value]="filiale"></p-tableCheckbox>
+                   </td>
+                 
+                   
+       <td> {{filiale.codef}}</td>
+       <td> {{filiale.designation}}</td>
+       <td> {{filiale.societefil}}</td>
+                  
+                   <td>
+                       <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"   *ngIf="authService.isAdmin()" (click)="editFiliale(filiale)"></button>
+                       <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"  *ngIf="authService.isAdmin()" (click)="deleteData(filiale.id)"></button>
+                   </td>
+                </tr>
+           </ng-template>
+           <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{filiales ? filiales.length : 0 }} filiales.
+            </div>
+        </ng-template>
+       </p-table>
+   
+   
+   
+   
+   
+   
+   
+    <p-dialog [(visible)]="filialeDialog" [style]="{width: '80%'}" header="filiale Details" [modal]="true" styleClass="p-fluid">
+       <ng-template pTemplate="content"  *ngIf="authService.isAdmin()" (ngsubmit)="insertData()">
+          
+         
+   
+  
+  
+   
+   
+    
+   
+        <div class="p-field">
+            <label for="codef">Codef</label>
+            <input type="text" pInputText id="codef" [(ngModel)]="filiale.codef" required autofocus />
+            <small class="p-error" *ngIf="submitted && !filiale.codef">designation is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="designation">Designation</label>
+            <input type="text" pInputText id="designation" [(ngModel)]="filiale.designation" required autofocus />
+            <small class="p-error" *ngIf="submitted && !filiale.designation">filiale is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="societefil">Societe</label>
+            <p-dropdown [options]="societees" [(ngModel)]="selectedSociete" [(ngModel)]= "filiale.societefil" optionLabel="nom" (onChange)="onSocieteChange($event)" optionValue="id"></p-dropdown> 
+        </div>
+         
+   
+          
+   
+   
+         
+          
+             
+   
+       </ng-template>
+   
+       
+   
+       <ng-template pTemplate="footer">
+           <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+           <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" *ngIf="authService.isAdmin()" (click)="insertData()"></button>
+      
+       </ng-template>
+   
+       </p-dialog>
+   
+       <p-dialog [(visible)]="updatefilialeDialog" [style]="{width: '450px'}" header="filiale Details" [modal]="true" styleClass="p-fluid">
+           <ng-template pTemplate="content"  *ngIf="authService.isAdmin()" (ngsubmit)="updateData()">
+              
+            <div class="p-field">
+                <label for="codef">Codef</label>
+                <input type="text" pInputText id="codef" [(ngModel)]="filiale.codef" required autofocus />
+                <small class="p-error" *ngIf="submitted && !filiale.codef">designation is required.</small>
+            </div>
+            <div class="p-field">
+                <label for="designation">Designation</label>
+                <input type="text" pInputText id="designation" [(ngModel)]="filiale.designation" required autofocus />
+                <small class="p-error" *ngIf="submitted && !filiale.designation">filiale is required.</small>
+            </div>
+            <div class="p-field">
+                <label for="societefil">Societe</label>
+                <p-dropdown [options]="societees" [(ngModel)]="selectedSociete" [(ngModel)]="filiale.societefil" optionLabel="nom" (onChange)="onSocieteChange($event)" optionValue="id"></p-dropdown> 
+            </div>
+             
+       
+                 
+       
+       
+        
+                 
+       
+           </ng-template>
+       
+           
+       
+           <ng-template pTemplate="footer">
+               <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+               <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="updateData()"></button>
+          
+           </ng-template>
+       
+       </p-dialog>
+       <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+   </div>
+   
+   
+   </div>
+
+
+
+
+
+
+
+
+
+
+
+

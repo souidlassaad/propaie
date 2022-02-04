@@ -1,0 +1,87 @@
+
+<div class="login-body">
+    <div class="login-wrapper">
+       
+        <div class="login-panel">
+            
+       
+<form #f="ngForm" (ngSubmit)="OnSubmit(f)">
+   
+
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <label for="name"></label>
+            <input  type="text" pInputText id="name" placeholder="Name" name="lname" ngModel required #lname="ngModel" required autofocus /> 
+        </div>
+       
+        <div class="p-field p-col">
+    <label for="surname"></label>
+    <input type="text" pInputText id="surname" placeholder="surname" name="lsurname" ngModel required #lsurname="ngModel" required autofocus />
+  
+    </div>
+</div>
+
+
+<div class="p-fluid p-formgrid p-grid">
+    <div class="p-field p-col">
+        <label for="mail"></label>
+        <input type="text" pInputText id="mail" placeholder="e-mail" name="lmail" ngModel required #lmail="ngModel" required autofocus />
+       
+        </div>
+        <div class="p-field p-col">
+            <label for="tel"></label>
+            <input type="text" pInputText id="tel" placeholder="telephone" name="ltel" ngModel required #ltel="ngModel" required autofocus />
+          
+            
+        </div></div>
+
+
+
+
+<!--
+    <div class="p-fluid p-formgrid p-grid">
+    <div class="p-field p-col">
+        <label for="etat"></label>
+    <p-inputSwitch [(ngModel)]="checked" ></p-inputSwitch>
+    </div>
+    
+    <div class="p-field p-col">
+        <label for="type"></label>
+        <p-dropdown [options]="type1" name="selected" [(ngModel)]="selectedType1" optionLabel="name" optionValue="code"></p-dropdown>
+     </div></div>   
+
+!-->
+
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col">
+                <label for="login"></label>
+                <input type="text" pInputText id="login"   placeholder="login" name="llogin" ngModel required #llogin="ngModel" required autofocus />
+               
+                </div>
+
+        <div class="p-field p-col">
+        <label for="password"></label>
+        <input type="password" placeholder="password" id="passw"  name=psw  [disabled]="f.invalid" pPassword />
+       </div></div>
+
+<!--
+       <div class="p-fluid p-formgrid p-grid">
+      
+      
+       <div class="p-field p-col">
+        <label for="superadmin"></label>
+    <p-inputSwitch [(ngModel)]="checked1"></p-inputSwitch>
+    </div>
+    <div class="p-field p-col"></div>
+</div>
+     -->
+
+        <p-divider></p-divider>
+
+
+
+
+        <button  pButton class="p-button-raised" label="save" icon="pi pi-save" type="button" (onclick)="OnSubmit(f)"></button>
+        </form>
+      
+        </div></div></div>

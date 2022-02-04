@@ -1,0 +1,289 @@
+
+<div>
+<p-dialog [(visible)]="societeeDialog" [style]="{width: '70%'}" header="Societe Sevice" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content" *ngIf="authService.isAdmin()"  (ngsubmit)="insertData()"> 
+
+
+
+
+  
+                    
+                    
+                             <div class="p-field p-grid">
+                             <label for="nom" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">nom</label>
+                             <div class="p-col-12 p-md-10">
+                               <input id="nom"  name="n" [(ngModel)]="societee.nom" type="text" pInputText required autofocus/> 
+                               <small class="p-error" *ngIf="submitted && !societee.nom">champ is required.</small>
+                               </div>
+                               </div>
+
+
+
+                                 <div class="p-field p-grid">
+                                  <label for="gerant" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">gerant</label>
+                                  <div class="p-col-12 p-md-10">
+
+                                  <input id="gerant"  name="gr" [(ngModel)]="societee.gerant" type="text" pInputText  required autofocus/>
+                                  <small class="p-error" *ngIf="submitted && !societee.gerant">champ is required.</small>
+                                  </div> 
+                             </div>
+                       
+               
+              
+              <div class="p-fluid">
+                <div class="p-field p-grid">
+                       <label for="adresse" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">adresse</label>
+                    <div class="p-col-12 p-md-10">
+                       <input id="adresse"  name="ad" [(ngModel)]="societee.adresse" type="text" pInputText  required autofocus/> 
+                       <small class="p-error" *ngIf="submitted && !societee.adresse">champ is required.</small>
+                   </div>
+                </div>
+                  
+             </div>
+               
+               <div class="p-fluid">
+                   <div class="p-field p-grid">
+                       <label for="fax" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">fax</label>
+                       <div class="p-col-12 p-md-10">
+                           <input id="fax"  name="fx" [(ngModel)]="societee.fax" type="text" pInputText  required autofocus/> 
+                           <small class="p-error" *ngIf="submitted && !societee.fax">champ is required.</small>
+                       </div>
+                   </div>
+                   <div class="p-field p-grid">
+                       <label for="mail" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">mail</label>
+                       <div class="p-col-12 p-md-10">
+                           <input id="mail"  name="ml" [(ngModel)]="societee.mail" type="email" pInputText  required autofocus/> 
+                           <small class="p-error" *ngIf="submitted && !societee.mail">champ is required.</small>
+                       </div>
+                   </div>
+               </div>
+               
+               <div class="p-fluid">
+                   <div class="p-field p-grid">
+                       <label for="impot" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">impot</label>
+                       <div class="p-col-12 p-md-10">
+                           <input id="impot"   name="im" [(ngModel)]="societee.impot" type="text" pInputText  required autofocus/> 
+                           <small class="p-error" *ngIf="submitted && !societee.impot">champ is required.</small>
+                       </div>
+                   </div>
+                   <div class="p-field p-grid">
+                       <label for="telephone" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">telephone</label>
+                       <div class="p-col-12 p-md-10">
+                           <input id="telephone"  name="tel" [(ngModel)]="societee.telephone" type="number" pInputText  required autofocus/>
+                           <small class="p-error" *ngIf="submitted && !societee.telephone">champ is required.</small> 
+                       </div>
+                   </div>
+               </div>
+               
+               <div class="p-fluid">
+                   <div class="p-field p-grid">
+                       <label for="reg_comm" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">registre commerciale</label>
+                       <div class="p-col-12 p-md-10">
+                           <input id="reg_comm" name="reg" [(ngModel)]="societee.reg_comm" type="text" pInputText  required autofocus/>
+                           <small class="p-error" *ngIf="submitted && !societee.reg_comm">champ is required.</small> 
+                       </div>
+                   </div>
+                   <div class="p-field p-grid">
+                       <label for="cnss" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">affiliation cnss</label>
+                       <div class="p-col-12 p-md-10">
+                           <input id="cnss"  name="cn" [(ngModel)]="societee.cnss" type="text" pInputText  required autofocus/> 
+                           <small class="p-error" *ngIf="submitted && !societee.cnss">champ is required.</small>
+                       </div>
+                   </div>
+               </div>
+              
+             
+
+
+
+
+
+<button pButton type="button"  class="p-button-text" label="save" *ngIf="authService.isAdmin()"  (click)="insertData()"></button>
+<button pButton type="button"  class="p-button-text" label = "cancel" (click)="hideDialog()"></button>
+
+
+
+
+
+
+</ng-template></p-dialog>
+<p-divider></p-divider>
+
+
+<p-toast></p-toast>
+
+<div class="card">
+
+
+    <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+           
+        </ng-template>
+
+    </p-toolbar>
+
+<p-table #dt [value]="societes" [globalFilterFields]="['nom','gerant']">
+    <ng-template pTemplate="caption">
+                        
+        <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+
+            <h5 class="p-m-0">Societe Service</h5>
+            <div class="search-input-wrapper">
+            <span class="p-input-icon-left">
+            <p-button icon="pi pi-search"></p-button>
+            <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+            </span>
+</div></div>
+</ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th>nom</th>
+           
+            <th>gerant</th>
+         
+            <th>adresse</th>
+           
+            <th>fax</th>
+            <th>mail</th>
+            <th>impot</th>
+            <th>telephone</th>
+            <th>reg comm</th>
+            <th> Affiliation cnss</th>
+            <th>options</th>
+           
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-societee>
+        <tr>
+            <td>{{societee.nom}}</td>
+            
+            <td>{{societee.gerant}}</td>
+           
+            <td>{{societee.adresse}}</td>
+           
+            <td>{{societee.fax}}</td>
+            <td>{{societee.mail}}</td>
+            <td>{{societee.impot}}</td>
+            <td>{{societee.telephone}}</td>
+            <td>{{societee.reg_comm}}</td>
+            <td>{{societee.cnss}}</td>
+          
+            <td>
+                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"   *ngIf="authService.isAdmin()" (click)="editSocietee(societee)"></button>
+                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"  *ngIf="authService.isAdmin()" (click)="deleteData(societee.id)"></button>
+            </td>
+        </tr>
+    </ng-template>
+    <ng-template pTemplate="summary">
+        <div class="p-d-flex p-ai-center p-jc-between">
+            In total there are {{societes ? societes.length : 0 }} societes service.
+        </div>
+    </ng-template>
+</p-table>
+
+</div>
+<p-dialog [(visible)]="updatesocieteeDialog" [style]="{width: '450px'}" header="societe service Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content"  *ngIf="authService.isAdmin()" (ngsubmit)="updateData()">
+       
+        <div class="p-field p-grid">
+            <label for="nom" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">nom</label>
+            <div class="p-col-12 p-md-10">
+              <input id="nom"  name="n" [(ngModel)]="societee.nom" type="text" pInputText required autofocus/> 
+              <small class="p-error" *ngIf="submitted && !societee.nom">champ is required.</small>
+              </div>
+              </div>
+
+
+
+                <div class="p-field p-grid">
+                 <label for="gerant" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">gerant</label>
+                 <div class="p-col-12 p-md-10">
+
+                 <input id="gerant"  name="gr" [(ngModel)]="societee.gerant" type="text" pInputText  required autofocus/>
+                 <small class="p-error" *ngIf="submitted && !societee.gerant">champ is required.</small>
+                 </div> 
+            </div>
+      
+
+
+<div class="p-fluid">
+<div class="p-field p-grid">
+      <label for="adresse" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">adresse</label>
+   <div class="p-col-12 p-md-10">
+      <input id="adresse"  name="ad" [(ngModel)]="societee.adresse" type="text" pInputText  required autofocus/> 
+      <small class="p-error" *ngIf="submitted && !societee.adresse">champ is required.</small>
+  </div>
+</div>
+ 
+</div>
+
+<div class="p-fluid">
+  <div class="p-field p-grid">
+      <label for="fax" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">fax</label>
+      <div class="p-col-12 p-md-10">
+          <input id="fax"  name="fx" [(ngModel)]="societee.fax" type="text" pInputText  required autofocus/> 
+          <small class="p-error" *ngIf="submitted && !societee.fax">champ is required.</small>
+      </div>
+  </div>
+  <div class="p-field p-grid">
+      <label for="mail" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">mail</label>
+      <div class="p-col-12 p-md-10">
+          <input id="mail"  name="ml" [(ngModel)]="societee.mail" type="email" pInputText  required autofocus/> 
+          <small class="p-error" *ngIf="submitted && !societee.mail">champ is required.</small>
+      </div>
+  </div>
+</div>
+
+<div class="p-fluid">
+  <div class="p-field p-grid">
+      <label for="impot" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">impot</label>
+      <div class="p-col-12 p-md-10">
+          <input id="impot"   name="im" [(ngModel)]="societee.impot" type="text" pInputText  required autofocus/> 
+          <small class="p-error" *ngIf="submitted && !societee.impot">champ is required.</small>
+      </div>
+  </div>
+  <div class="p-field p-grid">
+      <label for="telephone" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">telephone</label>
+      <div class="p-col-12 p-md-10">
+          <input id="telephone"  name="tel" [(ngModel)]="societee.telephone" type="number" pInputText  required autofocus/>
+          <small class="p-error" *ngIf="submitted && !societee.telephone">champ is required.</small> 
+      </div>
+  </div>
+</div>
+
+<div class="p-fluid">
+  <div class="p-field p-grid">
+      <label for="reg_comm" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">registre commerciale</label>
+      <div class="p-col-12 p-md-10">
+          <input id="reg_comm" name="reg" [(ngModel)]="societee.reg_comm" type="text" pInputText  required autofocus/>
+          <small class="p-error" *ngIf="submitted && !societee.reg_comm">champ is required.</small> 
+      </div>
+  </div>
+  <div class="p-field p-grid">
+      <label for="cnss" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">affiliation cnss</label>
+      <div class="p-col-12 p-md-10">
+          <input id="cnss"  name="cn" [(ngModel)]="societee.cnss" type="text" pInputText  required autofocus/> 
+          <small class="p-error" *ngIf="submitted && !societee.cnss">champ is required.</small>
+      </div>
+  </div>
+</div>
+
+      
+    </ng-template>
+
+    
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="updateData()"></button>
+   
+    </ng-template>
+
+</p-dialog>
+
+<p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+
+
+</div>

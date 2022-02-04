@@ -1,0 +1,26 @@
+{
+    "data": [
+		{
+		
+            "id": "1",
+			"code": "las",
+			"nom" :"souid",
+            "adresse" :"sou525id",
+            "registre_de_commerce" :"souid",
+            "code_postale" :"sou525id",
+            "ville" :"sou525id",
+            "fax" :"sou525id",
+
+            "impot" :"sou525id",
+            "num_cnss" :"52",
+            "rib" :"sou525id",
+            "mode_gc" :"sou525id",
+            "droit_conge" :"sou525id",
+            "code_exp" :true,
+
+            "mail" : "souidlassaad@gmail.com",
+            "tel" : "54083977"
+			
+		}
+    ]
+    }

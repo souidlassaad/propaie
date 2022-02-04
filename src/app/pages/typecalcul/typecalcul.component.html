@@ -1,0 +1,186 @@
+<div class="p-grid">
+    <div class="p-col-12">
+                          <p-toast></p-toast>
+    <div class="card">
+                  <p-toolbar styleClass="p-mb-4">
+           <ng-template pTemplate="left">
+               <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+              
+           </ng-template>
+   
+        
+                  </p-toolbar>
+   
+           <p-table  #dt [value]="calculs"  [rows]="10" [paginator]="true" [globalFilterFields]="['employe']"
+         [rowHover]="true" dataKey="id"
+             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+   
+   
+           <ng-template pTemplate="caption">
+   
+               <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+   
+                   <h5 class="p-m-0">Type calcule</h5>
+                   <div class="search-input-wrapper">
+                   <span class="p-input-icon-left">
+                   <p-button icon="pi pi-search"></p-button>
+                   <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                   </span>
+                </div>
+               </div>
+           </ng-template>
+           <ng-template pTemplate="header">
+               <tr>
+   
+                   <th style="width: 3rem">
+                       <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                   </th>
+                   <th  pSortableColumn="employe">employe<p-sortIcon field="employe"></p-sortIcon></th>
+                   <th  pSortableColumn="mensh">mens horaire<p-sortIcon field="mensh"></p-sortIcon></th>
+                   <th  pSortableColumn="datec">date<p-sortIcon field="datec"></p-sortIcon></th>
+                
+                  
+               </tr>
+           </ng-template>
+   
+   
+           <ng-template pTemplate="body" let-calcul>
+               <tr>
+                   <td>
+                       <p-tableCheckbox [value]="calcul"></p-tableCheckbox>
+                   </td>
+                 
+                   
+       <td> {{calcul.employe}}></td>
+       <td> {{calcul.mensh}}</td>
+       <td> {{calcul.datec}}></td>
+                  
+                   <td>
+                       <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"   *ngIf="authService.isAdmin()" (click)="editCalcul(calcul)"></button>
+                       <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"  *ngIf="authService.isAdmin()" (click)="deleteData(calcul.id)"></button>
+                   </td>
+                </tr>
+           </ng-template>
+           <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{calculs ? calculs.length : 0 }} calculs.
+            </div>
+        </ng-template>
+       </p-table>
+   
+   
+ 
+   
+   
+   
+    <p-dialog [(visible)]="calculDialog" [style]="{width: '80%'}" header="calcul Details" [modal]="true" styleClass="p-fluid">
+       <ng-template pTemplate="content"   *ngIf="authService.isAdmin()" (ngsubmit)="insertData()">
+          
+         
+   
+  
+  
+   
+   
+    
+   
+        <div class="p-field">
+            <label for="selectedEmploye">employe</label>
+                            <p-dropdown [options]="empolyees" [(ngModel)]="selectedEmploye" optionLabel="mat" (onChange)="onEmployeChange($event)" optionValue="id"></p-dropdown> 
+                <small class="p-error" *ngIf="submitted && !calcul.selectedEmploye">designation is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="mensh">mension horaire</label>
+            <input type="text" pInputText id="mensh" name="men" [(ngModel)]="calcul.mensh" required autofocus />
+            <small class="p-error" *ngIf="submitted && !calcul.mensh">designation is required.</small>
+        </div>
+       
+        <div class="p-field">
+            <label for="datec">date calcule</label>
+            <input type="date" pInputText id="datec" name="dt" [(ngModel)]="calcul.datec" required autofocus />
+            <small class="p-error" *ngIf="submitted && !calcul.datec">designation is required.</small>
+        </div>
+            
+       
+   
+             
+   
+   
+          
+   
+   
+         
+          
+             
+   
+       </ng-template>
+   
+       
+   
+       <ng-template pTemplate="footer">
+           <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+           <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text"  *ngIf="authService.isAdmin()" (click)="insertData()"></button>
+      
+       </ng-template>
+   
+       </p-dialog>
+   
+       <p-dialog [(visible)]="updatecalculDialog" [style]="{width: '450px'}" header="calcul Details" [modal]="true" styleClass="p-fluid">
+           <ng-template pTemplate="content"  *ngIf="authService.isAdmin()" (ngsubmit)="updateData()">
+              
+            <div class="p-field">
+                <label for="selectedEmploye">employe</label>
+                            <p-dropdown [options]="empolyees" [(ngModel)]="selectedEmploye" optionLabel="mat" (onChange)="onEmployeChange($event)" optionValue="id"></p-dropdown> 
+                <small class="p-error" *ngIf="submitted && !calcul.selectedEmploye">designation is required.</small>
+            </div>
+            <div class="p-field">
+                <label for="mensh">mension horaire</label>
+                <input type="text" pInputText id="mensh" name="men" [(ngModel)]="calcul.mensh" required autofocus />
+                <small class="p-error" *ngIf="submitted && !calcul.mensh">designation is required.</small>
+            </div>
+           
+            <div class="p-field">
+                <label for="datec">date calcule</label>
+                <input type="date" pInputText id="datec" name="dt" [(ngModel)]="calcul.datec" required autofocus />
+                <small class="p-error" *ngIf="submitted && !calcul.datec">designation is required.</small>
+            </div>
+                
+           
+             
+       
+                 
+       
+       
+             
+              
+                 
+       
+           </ng-template>
+       
+           
+       
+           <ng-template pTemplate="footer">
+               <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+               <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="updateData()"></button>
+          
+           </ng-template>
+       
+       </p-dialog>
+       <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+   
+   </div>
+   </div>
+   
+   </div>
+
+
+
+
+
+
+
+
+
+
+
+

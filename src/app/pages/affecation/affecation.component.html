@@ -1,0 +1,208 @@
+<div class="p-grid">
+    <div class="p-col-12">
+                          <p-toast></p-toast>
+    <div class="card">
+                  <p-toolbar styleClass="p-mb-4">
+           <ng-template pTemplate="left">
+               <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+              
+           </ng-template>
+   
+        
+                  </p-toolbar>
+   
+           <p-table  #dt [value]="affectations"  [rows]="10" [paginator]="true" [globalFilterFields]="['employeaff']"
+         [rowHover]="true" dataKey="id"
+             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+   
+   
+           <ng-template pTemplate="caption">
+   
+               <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+   
+                   <h5 class="p-m-0">Affectation</h5>
+                   <div class="search-input-wrapper">
+                   <span class="p-input-icon-left">
+                   <p-button icon="pi pi-search"></p-button>
+                   <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                   </span>
+                </div>
+               </div>
+           </ng-template>
+           <ng-template pTemplate="header">
+               <tr>
+   
+                   <th style="width: 3rem">
+                       <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                   </th>
+                   <th  pSortableColumn="employeaff">employe<p-sortIcon field="employeaff"></p-sortIcon></th>
+                 
+                  
+                   <th  pSortableColumn="avanceaff">avance<p-sortIcon field="avanceaff"></p-sortIcon></th>
+                  
+                   <th  pSortableColumn="contrataff">contrat<p-sortIcon field="contrataff"></p-sortIcon></th>
+                  
+                   <th>options</th>
+                
+                  
+               </tr>
+           </ng-template>
+   
+   
+           <ng-template pTemplate="body" let-affectation>
+               <tr>
+                   <td>
+                       <p-tableCheckbox [value]="affectation"></p-tableCheckbox>
+                   </td>
+                 
+                   
+       <td> {{affectation.employeaff}}</td>
+ 
+       <td> {{affectation.avanceaff}}</td>
+       <td> {{affectation.contrataff}}</td>
+                  
+                   <td>
+                       <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"   *ngIf="authService.isAdmin()" (click)="editAffectation(affectation)"></button>
+                       <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"  *ngIf="authService.isAdmin()" (click)="deleteData(affectation.id)"></button>
+                   </td>
+                </tr>
+           </ng-template>
+           <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{affectations ? affectations.length : 0 }} affectations.
+            </div>
+        </ng-template>
+       </p-table>
+   
+   
+ 
+   
+   
+   
+    <p-dialog [(visible)]="affectationDialog" [style]="{width: '80%'}" header="affectation Details" [modal]="true" styleClass="p-fluid">
+       <ng-template pTemplate="content"  *ngIf="authService.isAdmin()" (ngsubmit)="insertData()">
+          
+         
+   
+  
+  
+   
+   
+    
+   
+        <div class="p-field">
+            <label for="employeaff">Employe</label>
+                            <p-dropdown [options]="empolyees" [(ngModel)]="selectedEmploye" optionLabel="mat"  [(ngModel)]="affectation.employeaff" (onChange)="onEmployeChange($event)" optionValue="id"></p-dropdown> 
+                <small class="p-error" *ngIf="submitted && !affectation.employeaff">designation is required.</small>
+        </div>
+       
+        
+       
+        <div class="p-field">
+            <label for="avanceaff">Avance</label>
+                            <p-dropdown [options]="avances" [(ngModel)]="selectedAvance" optionLabel="annee" [(ngModel)]="affectation.avanceaff" (onChange)="onAvanceChange($event)" optionValue="id"></p-dropdown> 
+                <small class="p-error" *ngIf="submitted && !affectation.avanceaff">designation is required.</small>
+        </div>
+       
+        <div class="p-field">
+            <label for="contrataff">Contrat</label>
+           <p-dropdown [options]="contrats" [(ngModel)]="selectedContrat" optionLabel="nom" [(ngModel)]="affectation.contrataff" (onChange)="onContratChange($event)" optionValue="id"></p-dropdown> 
+                <small class="p-error" *ngIf="submitted && !affectation.contrataff">designation is required.</small>
+        </div>
+       
+       
+   
+             
+   
+   
+          
+   
+   
+         
+          
+             
+   
+       </ng-template>
+   
+       
+   
+       <ng-template pTemplate="footer">
+           <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" *ngIf="authService.isAdmin()" (click)="hideDialog()"></button>
+           <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" *ngIf="authService.isAdmin()" (click)="insertData()"></button>
+      
+       </ng-template>
+   
+       </p-dialog>
+   
+       <p-dialog [(visible)]="updateaffectationDialog" [style]="{width: '450px'}" header="affectation Details" [modal]="true" styleClass="p-fluid">
+           <ng-template pTemplate="content"  *ngIf="authService.isAdmin()" (ngsubmit)="updateData()">
+              
+            <div class="p-field">
+                <label for="employeaff">Employe</label>
+                                <p-dropdown [options]="empolyees" [(ngModel)]="selectedEmploye" optionLabel="mat"  [(ngModel)]="affectation.employeaff" (onChange)="onEmployeChange($event)" optionValue="id"></p-dropdown> 
+                    <small class="p-error" *ngIf="submitted && !affectation.employeaff">designation is required.</small>
+            </div>
+           
+            
+           
+            <div class="p-field">
+                <label for="avanceaff">Avance</label>
+                                <p-dropdown [options]="avances" [(ngModel)]="selectedAvance" optionLabel="annee" [(ngModel)]="affectation.avanceaff" (onChange)="onAvanceChange($event)" optionValue="id"></p-dropdown> 
+                    <small class="p-error" *ngIf="submitted && !affectation.avanceaff">designation is required.</small>
+            </div>
+           
+            <div class="p-field">
+                <label for="contrataff">Contrat</label>
+                     <p-dropdown [options]="contrats" [(ngModel)]="selectedContrat" optionLabel="nom" [(ngModel)]="affectation.contrataff" (onChange)="onContratChange($event)" optionValue="id"></p-dropdown> 
+                    <small class="p-error" *ngIf="submitted && !affectation.contrataff">designation is required.</small>
+            </div>
+       
+       
+           
+           
+       
+                 
+       
+       
+              
+       
+           
+             
+       
+                 
+       
+       
+             
+              
+                 
+       
+           </ng-template>
+       
+           
+       
+           <ng-template pTemplate="footer">
+               <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+               <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="updateData()"></button>
+          
+           </ng-template>
+       
+       </p-dialog>
+       <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+   
+   </div>
+   </div>
+   
+   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,438 @@
+
+
+<div class="p-grid">
+    <div class="p-col-12">
+                          <p-toast></p-toast>
+    <div class="card">
+         <p-toolbar styleClass="p-mb-4">
+           <ng-template pTemplate="left">
+               <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+               <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" *ngIf="authService.isAdmin()" (click)="deleteSelectedEmployes()" [disabled]="!selectedemployes || !selectedemployes.length"></button>
+           </ng-template>
+   
+        
+          </p-toolbar>
+   
+           <p-table  #dt [value]="employes"  [rows]="10" [paginator]="true" [globalFilterFields]="['CIN']"
+           [(selection)]="selectedemployes" [rowHover]="true" dataKey="id" 
+             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+   
+   
+           <ng-template pTemplate="caption">
+   
+               <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+   
+                   <h5 class="p-m-0">Employee</h5>
+                   <div class="search-input-wrapper">
+                   <span class="p-input-icon-left">
+                   <p-button icon="pi pi-search"></p-button>
+                   <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                   </span>
+   </div>
+               </div>
+           </ng-template>
+           <ng-template pTemplate="header">
+               <tr>
+   
+                   <th style="width: 3rem">
+                       <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                   </th>
+                   <th  pSortableColumn="mat">mat<p-sortIcon field="mat"></p-sortIcon></th>
+                   <th  pSortableColumn="nom">nom<p-sortIcon field="nom"></p-sortIcon></th>
+                   <th  pSortableColumn="prenom">prenom<p-sortIcon field="prenom"></p-sortIcon></th>
+                
+                   <th  pSortableColumn="CIN">CIN<p-sortIcon field="CIN"></p-sortIcon></th>
+                   <th  pSortableColumn="genre">genre<p-sortIcon field="genre"></p-sortIcon></th>
+                   <th  pSortableColumn="DDN">DDN<p-sortIcon field="DDN"></p-sortIcon></th>
+                   <th  pSortableColumn="delivre">delivre<p-sortIcon field="delivre"></p-sortIcon></th>
+                   <th  pSortableColumn="ville">ville<p-sortIcon field="ville"></p-sortIcon></th>
+                   <th  pSortableColumn="natio">natio<p-sortIcon field="natio"></p-sortIcon></th>
+                   <th  pSortableColumn="adr">adr<p-sortIcon field="adr"></p-sortIcon></th>
+                   <th  pSortableColumn="adrp">adrp<p-sortIcon field="adrp"></p-sortIcon></th>
+                   <th  pSortableColumn="codep">codep<p-sortIcon field="codep"></p-sortIcon></th>
+                 
+                   <th  pSortableColumn="ansolde">ansolde<p-sortIcon field="ansolde"></p-sortIcon></th>
+                   <th  pSortableColumn="solcong">solcong<p-sortIcon field="solcong"></p-sortIcon></th>
+                   <th  pSortableColumn="appprime">appprime<p-sortIcon field="appprime"></p-sortIcon></th>
+                  
+                   <th  pSortableColumn="tel">tel<p-sortIcon field="tel"></p-sortIcon></th>
+                   <th  pSortableColumn="mail">mail<p-sortIcon field="mail"></p-sortIcon></th>
+                   
+                   <th>options</th>
+               </tr>
+           </ng-template>
+   
+   
+           <ng-template pTemplate="body" let-employe>
+               <tr>
+                   <td>
+                       <p-tableCheckbox [value]="employe"></p-tableCheckbox>
+                   </td>
+                 
+                   <td>{{employe.mat}}</td>
+                   <td>{{employe.nom}}</td>
+                   <td>{{employe.prenom}}</td>
+                 
+                   <td>{{employe.CIN}}</td>
+                   <td>{{employe.genre}}</td>
+                   <td>{{employe.DDN}}</td>
+                   <td>{{employe.delivre}}</td>
+                   <td>{{employe.ville}}</td>
+                   <td>{{employe.natio}}</td>
+                   <td>{{employe.adr}}</td>
+                   <td>{{employe.adrp}}</td>
+                   <td>{{employe.codep}}</td>
+                  
+                   <td>{{employe.ansolde}}</td>
+                   <td>{{employe.solcong}}</td>
+                   <td>{{employe.appprime}}</td>
+                  
+                   <td>{{employe.tel}}</td>
+                   <td>{{employe.mail}}</td>
+                   
+                   <td>
+                       <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"   *ngIf="authService.isAdmin()" (click)="editEmploye(employe)"></button>
+                       <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"  *ngIf="authService.isAdmin()" (click)="deleteData(employe.id)"></button>
+                   </td>
+                </tr>
+           </ng-template>
+           <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{employes ? employes.length : 0 }} employes.
+            </div>
+        </ng-template>
+   
+       </p-table>
+   
+   
+   
+   
+   
+   
+   
+    <p-dialog [(visible)]="employeDialog" [style]="{width: '80%'}" header="employe Details" [modal]="true" styleClass="p-fluid">
+       <ng-template pTemplate="content"  *ngIf="authService.isAdmin()"  (ngsubmit)="insertData()">
+          
+          
+          
+   
+           
+   
+    <div class="p-fluid p-formgrid p-grid">
+               <div class="p-field p-col">
+               <label for="mat">Matricule</label>
+               <input type="text" pInputText id="mat" [(ngModel)]="employe.mat" required autofocus />
+               <small class="p-error" *ngIf="submitted && !employe.mat">matricule is required.</small>
+             </div>
+             <div class="p-field p-col">
+                <label for="CIN">CIN </label>
+                <input id="CIN"  name="c" type="number" pInputText  [(ngModel)]="employe.CIN"  required autofocus /> 
+                <small class="p-error" *ngIf="submitted && !employe.CIN">CIN is required.</small>
+            </div>
+           
+   </div>
+   
+   
+   <div class="p-fluid p-formgrid p-grid">
+       <div class="p-field p-col">
+           <label for="prenom">Prenom</label>
+           <input id="prenom"  name="a"  type="text" pInputText  [(ngModel)]="employe.prenom"  required autofocus /> 
+           <small class="p-error" *ngIf="submitted && !employe.prenom">prenom is required.</small>
+       </div>
+       <div class="p-field p-col">
+        <label for="nom">Nom</label>
+        <input type="text" pInputText id="nom" [(ngModel)]="employe.nom" required autofocus />
+        <small class="p-error" *ngIf="submitted && !employe.nom">nom is required.</small>
+        </div>
+
+
+   </div>
+   
+   
+    
+          
+          
+   
+   <div class="p-fluid p-formgrid p-grid">
+       <div class="p-field p-col">
+           <label for="genre">Genre</label>
+           <input id="genre"  name="d"  type="text" pInputText   [(ngModel)]="employe.genre"  required autofocus /> 
+           <small class="p-error" *ngIf="submitted && !employe.genre">genre is required.</small>
+       </div>
+       <div class="p-field p-col">
+           <label for="DDN">Date de naissance </label>
+           <input id="DDN"  name="e" type="date" pInputText [(ngModel)]="employe.DDN"  required autofocus /> 
+           <small class="p-error" *ngIf="submitted && !employe.DDN">Date de naissance is required.</small>
+       </div>
+   </div>
+   
+   <div class="p-fluid p-formgrid p-grid">
+       <div class="p-field p-col">
+           <label for="delivre">Delivre</label>
+           <input id="delivre"  name="f"  type="text" pInputText  [(ngModel)]="employe.delivre"  required autofocus /> 
+           <small class="p-error" *ngIf="submitted && !employe.delivre">delivre is required.</small>
+       </div>
+       <div class="p-field p-col">
+           <label for="ville">Ville</label>
+           <input id="ville"  name="g" type="text" pInputText  [(ngModel)]="employe.ville"  required autofocus /> 
+           <small class="p-error" *ngIf="submitted && !employe.ville">ville is required.</small>
+       </div>
+   </div>
+   
+   <div class="p-fluid p-formgrid p-grid">
+       <div class="p-field p-col">
+           <label for="natio">Nationalite</label>
+           <input id="natio"  name="h"  type="text" pInputText  [(ngModel)]="employe.natio"  required autofocus /> 
+           <small class="p-error" *ngIf="submitted && !employe.natio">nationalite is required.</small>
+       </div>
+   </div>
+   
+   <div class="p-fluid p-formgrid p-grid">
+       <div class="p-field p-col">
+           <label for="adr">Adresse</label>
+           <input id="adr"  name="i"  type="text" pInputText  [(ngModel)]="employe.adr"  required autofocus /> 
+           <small class="p-error" *ngIf="submitted && !employe.adr">adresse is required.</small>
+       </div>
+   </div>
+   
+   
+   <div class="p-fluid p-formgrid p-grid">
+       <div class="p-field p-col">
+           <label for="adrp">Adresse postal</label>
+           <input id="adrp"  name="j"  type="text" pInputText  [(ngModel)]="employe.adrp"  required autofocus /> 
+           <small class="p-error" *ngIf="submitted && !employe.adrp">adresse postal is required.</small>
+       </div>
+       <div class="p-field p-col">
+           <label for="codep">Code postal </label>
+           <input id="codep"  name="k" type="text" pInputText  [(ngModel)]="employe.codep"  required autofocus /> 
+           <small class="p-error" *ngIf="submitted && !employe.codep">code postal is required.</small>
+       </div>
+   </div>
+   
+   <div class="p-fluid p-formgrid p-grid">
+       
+
+       <div class="p-field p-col">
+           <label for="ansolde">Ancien solde </label>
+           <p-inputNumber [(ngModel)]="value1" [showButtons]="true" mode="currency" currency="USD" [(ngModel)]="employe.ansolde"></p-inputNumber>
+           <small class="p-error" *ngIf="submitted && !employe.ansolde">ancien solde is required.</small>
+       </div>
+   </div>
+   
+   <div class="p-fluid p-formgrid p-grid">
+       <div class="p-field p-col">
+           <label for="solcong">Solde congee</label>
+           <p-inputNumber [(ngModel)]="value1" [showButtons]="true" mode="currency" currency="USD" [(ngModel)]="employe.solcong"></p-inputNumber>
+           <small class="p-error" *ngIf="submitted && !employe.solcong">solde congee is required.</small>
+       </div>
+   </div>
+   
+   
+   <div class="p-fluid p-formgrid p-grid">
+       <div class="p-field p-col">
+           <label for="appprime">Application prime</label>
+           <input id="appprime"  name="o"  type="text" pInputText  [(ngModel)]="employe.appprime"  required autofocus /> 
+           <small class="p-error" *ngIf="submitted && !employe.appprime">application prime is required.</small>
+       </div>
+   </div>
+   
+   
+   
+   
+   
+  
+   
+   
+               <div class="p-field">
+                   <label for="mail">E-mail</label>
+                   <input type="email" pInputText id="mail" [(ngModel)]="employe.mail" required autofocus />
+                   <small class="p-error" *ngIf="submitted && !employe.mail">mail is required.</small>
+                   </div>
+   
+               <div class="p-field">
+                   <label for="tel">Telephone</label>
+                   <input type="number" [(ngModel)]="employe.tel" pInputText id="tel"  required autofocus/>
+                   <small class="p-error" *ngIf="submitted && !employe.tel">telephone is required.</small>
+               </div>
+         
+   
+          
+   
+   
+         
+          
+             
+   
+       </ng-template>
+   
+       
+   
+       <ng-template pTemplate="footer">
+           <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+           <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" *ngIf="authService.isAdmin()" (click)="insertData()"></button>
+      
+       </ng-template>
+   
+       </p-dialog>
+   
+       <p-dialog [(visible)]="updateEmployeDialog" [style]="{width: '450px'}" header="employe Details" [modal]="true" styleClass="p-fluid">
+           <ng-template pTemplate="content"  *ngIf="authService.isAdmin()" (ngsubmit)="updateData()">
+              
+            <div class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col">
+                <label for="mat">Matricule</label>
+                <input type="text" pInputText id="mat" [(ngModel)]="employe.mat" required autofocus />
+                <small class="p-error" *ngIf="submitted && !employe.mat">matricule is required.</small>
+              </div>
+              <div class="p-field p-col">
+                <label for="CIN">CIN </label>
+                <input id="CIN"  name="c" type="number" pInputText  [(ngModel)]="employe.CIN"  required autofocus /> 
+                <small class="p-error" *ngIf="submitted && !employe.CIN">CIN is required.</small>
+            </div>
+             
+            </div>
+    
+    
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <label for="prenom">Prenom</label>
+            <input id="prenom"  name="a"  type="text" pInputText  [(ngModel)]="employe.prenom"  required autofocus /> 
+            <small class="p-error" *ngIf="submitted && !employe.prenom">prenom is required.</small>
+        </div>
+          <div class="p-field p-col">
+            <label for="nom">Nom</label>
+            <input type="text" pInputText id="nom" [(ngModel)]="employe.nom" required autofocus />
+            <small class="p-error" *ngIf="submitted && !employe.nom">nom is required.</small>
+          </div>
+    </div>
+    
+    
+    
+           
+
+           
+   
+    
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <label for="genre">Genre</label>
+            <input id="genre"  name="d"  type="text" pInputText   [(ngModel)]="employe.genre"  required autofocus /> 
+            <small class="p-error" *ngIf="submitted && !employe.genre">genre is required.</small>
+        </div>
+        <div class="p-field p-col">
+            <label for="DDN">Date de naissance </label>
+            <input id="DDN"  name="e" type="date" pInputText [(ngModel)]="employe.DDN"  required autofocus /> 
+            <small class="p-error" *ngIf="submitted && !employe.DDN">Date de naissance is required.</small>
+        </div>
+    </div>
+    
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <label for="delivre">Delivre</label>
+            <input id="delivre"  name="f"  type="text" pInputText  [(ngModel)]="employe.delivre"  required autofocus /> 
+            <small class="p-error" *ngIf="submitted && !employe.delivre">delivre is required.</small>
+        </div>
+        <div class="p-field p-col">
+            <label for="ville">Ville</label>
+            <input id="ville"  name="g" type="text" pInputText  [(ngModel)]="employe.ville"  required autofocus /> 
+            <small class="p-error" *ngIf="submitted && !employe.ville">ville is required.</small>
+        </div>
+    </div>
+    
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <label for="natio">Nationalite</label>
+            <input id="natio"  name="h"  type="text" pInputText  [(ngModel)]="employe.natio"  required autofocus /> 
+            <small class="p-error" *ngIf="submitted && !employe.natio">nationalite is required.</small>
+        </div>
+    </div>
+    
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <label for="adr">Adresse</label>
+            <input id="adr"  name="i"  type="text" pInputText  [(ngModel)]="employe.adr"  required autofocus /> 
+            <small class="p-error" *ngIf="submitted && !employe.adr">adresse is required.</small>
+        </div>
+    </div>
+    
+    
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <label for="adrp">Adresse postal</label>
+            <input id="adrp"  name="j"  type="text" pInputText  [(ngModel)]="employe.adrp"  required autofocus /> 
+            <small class="p-error" *ngIf="submitted && !employe.adrp">adresse postal is required.</small>
+        </div>
+        <div class="p-field p-col">
+            <label for="codep">Code postal </label>
+            <input id="codep"  name="k" type="text" pInputText  [(ngModel)]="employe.codep"  required autofocus /> 
+            <small class="p-error" *ngIf="submitted && !employe.codep">code postal is required.</small>
+        </div>
+    </div>
+    
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <label for="nedu">Niveau d'education</label>
+            <input id="nedu"  name="l"  type="text" pInputText  [(ngModel)]="employe.nedu"  required autofocus /> 
+            <small class="p-error" *ngIf="submitted && !employe.nedu">niveau d'education is required.</small>
+        </div>
+        <div class="p-field p-col">
+            <label for="ansolde">Ancien solde </label>
+            <p-inputNumber [(ngModel)]="value1" [showButtons]="true" mode="currency" currency="USD" [(ngModel)]="employe.ansolde"></p-inputNumber>
+            <small class="p-error" *ngIf="submitted && !employe.ansolde">ancien solde is required.</small>
+        </div>
+    </div>
+    
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <label for="solcong">Solde congee</label>
+            <p-inputNumber [(ngModel)]="value1" [showButtons]="true" mode="currency" currency="USD" [(ngModel)]="employe.solcong"></p-inputNumber>
+            <small class="p-error" *ngIf="submitted && !employe.solcong">solde congee is required.</small>
+        </div>
+    </div>
+    
+    
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <label for="appprime">Application prime</label>
+            <input id="appprime"  name="o"  type="text" pInputText  [(ngModel)]="employe.appprime"  required autofocus /> 
+            <small class="p-error" *ngIf="submitted && !employe.appprime">application prime is required.</small>
+        </div>
+    </div>
+    
+    
+    
+    
+    
+   
+    
+    
+                <div class="p-field">
+                    <label for="mail">E-mail</label>
+                    <input type="email" pInputText id="mail" [(ngModel)]="employe.mail" required autofocus />
+                    <small class="p-error" *ngIf="submitted && !employe.mail">mail is required.</small>
+                    </div>
+    
+                <div class="p-field">
+                    <label for="tel">Telephone</label>
+                    <input type="number" [(ngModel)]="employe.tel" pInputText id="tel"  required autofocus/>
+                    <small class="p-error" *ngIf="submitted && !employe.tel">telephone is required.</small>
+                </div>
+          
+    
+       
+           </ng-template>
+       
+           
+       
+           <ng-template pTemplate="footer">
+               <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+               <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="updateData()"></button>
+          
+           </ng-template>
+       
+       </p-dialog>
+      
+   </div>
+   
+   <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+   </div>

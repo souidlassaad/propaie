@@ -1,0 +1,124 @@
+<div class="form-group">
+<div class="p-d-flex">
+ <div>
+   
+        <div class="p-field p-grid">
+            <label for="situationfamiliale" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">situation</label>
+        <div class="p-col-12 p-md-10">
+             <p-dropdown [options]="situations" [(ngModel)]="infoperso.selectedSituation" optionLabel="name" required autofocus></p-dropdown>
+             <small class="p-error" *ngIf="submitted && !infoperso.selectedSituation">required.</small>
+      </div>
+    </div>
+
+      
+<div class="p-field p-grid">
+    <label for="nbrenfant" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">nombre d'enfants</label>
+    <div class="p-col-12 p-md-10">
+        <input id="nbrenfant"  name="nbre"  type="number" [(ngModel)]="infoperso.nbrenfant" pInputText required autofocus> 
+        <small class="p-error" *ngIf="submitted && !infoperso.nbrenfant">required.</small>
+    </div>
+</div>
+
+  <div class="p-field p-grid">
+    <label for="nbrparent" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">nombre parents</label>
+    <div class="p-col-12 p-md-10">
+        <input id="nbrparent"  name="nbrp"  type="number" [(ngModel)]="infoperso.nbrparent" pInputText required autofocus> 
+        <small class="p-error" *ngIf="submitted && !infoperso.nbrparent">required.</small>
+    </div>
+  </div>
+
+  <div class="p-field p-grid">
+    <label for="eh" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">enfants Handicapes</label>
+    <div class="p-col-12 p-md-10">
+        <input id="eh"  name="hand"  type="number" [(ngModel)]="infoperso.eh" pInputText required autofocus> 
+        <small class="p-error" *ngIf="submitted && !infoperso.eh">required.</small>
+    </div>
+</div>
+
+
+
+<div class="p-field p-grid">
+    <label for="mip" class="p-col-12 p-mb-2 p-md-2 p-mb-md-0">Mantant interet prets</label>
+    <div class="p-col-12 p-md-10">
+        <input id="mip"  name="mi"  type="number" [(ngModel)]="infoperso.mip" pInputText required autofocus> 
+        <small class="p-error" *ngIf="submitted && !infoperso.mip">required.</small>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+</div>
+    <p-divider layout="vertical"></p-divider>
+
+<div>
+
+
+
+    <div class="p-field p-grid">
+        <label for="cheff">chef de famille</label>
+        <div class="p-col-12 p-md-10">
+         <p-checkbox name="groupname" value="val1" [(ngModel)]="infoperso.cheff"></p-checkbox>
+       
+        </div>
+    </div>
+    <div class="p-field p-grid">
+        <label for="pc">parents en charge </label>
+        <div class="p-col-12 p-md-10">
+         <p-checkbox name="groupname" value="val2"[(ngModel)]="infoperso.pc"></p-checkbox>
+        
+        </div>
+    </div>
+    <div class="p-field p-grid">
+        <label for="ere1">1 ere enfant en charge</label>
+        <div class="p-col-12 p-md-10">
+         <p-checkbox name="groupname" value="val3" [(ngModel)]="infoperso.ere1"></p-checkbox>
+        
+        </div>
+    </div>
+    <div class="p-field p-grid">
+        <label for="eme2">2 eme enfant en charge</label>
+        <div class="p-col-12 p-md-10">
+         <p-checkbox name="groupname" value="val4" [(ngModel)]="infoperso.eme2"></p-checkbox>
+        
+        </div>
+    </div>
+    <div class="p-field p-grid">
+        <label for="eme3" >3 eme enfant en charge</label>
+        <div class="p-col-12 p-md-10">
+         <p-checkbox name="groupname" value="val5" [(ngModel)]="infoperso.eme3"></p-checkbox>
+       
+        </div>
+    </div>
+
+    <div class="p-field p-grid">
+        <label for="eme4">4 eme enfant en charge</label>
+        <div class="p-col-12 p-md-10">
+         <p-checkbox name="groupname" value="val6" [(ngModel)]="infoperso.eme4"></p-checkbox>
+        
+        </div>
+    </div>
+
+
+
+
+
+</div>
+</div>
+
+
+
+
+<p-divider></p-divider>
+
+
+    <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" ></button>
+    <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" ></button>
+
+
+</div>

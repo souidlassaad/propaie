@@ -1,0 +1,499 @@
+<div class="p-grid">
+    <div class="p-col-12">
+<p-dialog [(visible)]="contratDialog" [style]="{width: '70%'}" header="contrat Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content" *ngIf="authService.isAdmin()"  (ngsubmit)="insertData()">
+       
+
+<div class="card">
+    <p-toolbar styleClass="p-mb-4">
+     <h5 class="p-m-0">Societe services</h5>
+         </p-toolbar>
+
+<div class="p-fluid p-formgrid p-grid">
+    <div class="p-field p-col">
+                  
+        <label for="societeecont">societe service </label>
+         <p-dropdown [options]="societes" [(ngModel)]="selectedSocietee" optionLabel="nom" [(ngModel)]="contrat.societeecont" (onChange)="onSocieteeChange($event)" optionValue="id"></p-dropdown> 
+                
+    </div>
+  
+    <div class="p-field p-col">
+        <label for="regcom">Registre commerciale</label>
+        <input id="regcom"  name="b1" type="text"  [(ngModel)]="contrat.regcom" pInputText required autofocus /> 
+          <small class="p-error" *ngIf="submitted && !contrat.regcom">champ required.</small>
+    </div>
+    </div>
+
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <label for="tel">Telephone</label>
+            <input id="tel"  name="c1"  type="number"  [(ngModel)]="contrat.tel" pInputText required autofocus /> 
+            <small class="p-error" *ngIf="submitted && !contrat.tel">champ required.</small>
+        </div>
+        <div class="p-field p-col">
+            <label for="fax">fax </label>
+            <input id="fax"  name="d1" type="text"  [(ngModel)]="contrat.fax" pInputText required autofocus /> 
+              <small class="p-error" *ngIf="submitted && !contrat.fax">champ required.</small>
+        </div>
+        </div>
+
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col">
+                <label for="mail">mail</label>
+                <input id="mail"  name="e1"  type="mail"  [(ngModel)]="contrat.mail" pInputText required autofocus /> 
+                <small class="p-error" *ngIf="submitted && !contrat.mail">champ required.</small>
+            </div>
+            <div class="p-field p-col">
+                <label for="impot">impot </label>
+                <input id="impot"  name="f1" type="text"  [(ngModel)]="contrat.impot" pInputText required autofocus /> 
+                  <small class="p-error" *ngIf="submitted && !contrat.impot">champ required.</small>
+            </div>
+            </div>
+
+
+    </div>
+
+    <div class="card">
+        <p-toolbar styleClass="p-mb-4">
+         <h5 class="p-m-0">Contrat</h5>
+             </p-toolbar>
+
+             <div class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col">
+                    <label for="numero">numero</label>
+                    <input id="numero"  name="g1"  type="number"  [(ngModel)]="contrat.numero" pInputText required autofocus /> 
+                    <small class="p-error" *ngIf="submitted && !contrat.numero">champ required.</small>
+                </div>
+                <div class="p-field p-col">
+                    <label for="societecont">societe</label>
+                    <p-dropdown [options]="societees" [(ngModel)]="selectedSociete" optionLabel="code" [(ngModel)]="contrat.societecont" (onChange)="onSocieteChange($event)" optionValue="id"></p-dropdown> 
+                    
+                  
+                </div>
+              
+
+
+                </div>
+
+                <div class="p-fluid p-formgrid p-grid">
+                    <div class="p-field p-col">
+                        <label for="employecont">employe</label>
+                        <p-dropdown [options]="empolyees" [(ngModel)]="selectedEmploye" optionLabel="mat" [(ngModel)]="contrat.employecont" (onChange)="onEmployeChange($event)" optionValue="id"></p-dropdown> 
+                       
+                        
+                     </div>
+                    
+                     <div class="p-field p-col">
+                        <label for="adre">adresse employe</label>
+                        <input id="adre"  name="o1"  type="text"  [(ngModel)]="contrat.adre" pInputText required autofocus /> 
+                        <small class="p-error" *ngIf="submitted && !contrat.adre">champ required.</small>
+                    </div>
+
+                    </div>
+        
+                    <div class="p-fluid p-formgrid p-grid">
+                        <div class="p-field p-col">
+                            <label for="codepe">code postal employe </label>
+                            <input id="codepe"  name="l1" type="text"  [(ngModel)]="contrat.codepe" pInputText required autofocus /> 
+                              <small class="p-error" *ngIf="submitted && !contrat.codepe">champ required.</small>
+                        </div>
+                      
+
+                        
+
+                        <div class="p-field p-col">
+                            <label for="nte">numero tel employee</label>
+                            <input id="nte"  name="i1"  type="number"  [(ngModel)]="contrat.nte" pInputText required autofocus /> 
+                            <small class="p-error" *ngIf="submitted && !contrat.nte">champ required.</small>
+                        </div>
+
+
+
+
+
+
+                        <div class="p-field p-col">
+                            <label for="nom">Nom</label>
+                            <input id="nom"  name="a1"  type="text"  [(ngModel)]="contrat.nom" pInputText required autofocus /> 
+                            <small class="p-error" *ngIf="submitted && !contrat.nom">champ required.</small>
+                        </div>
+
+                        </div>
+            
+                        <div class="p-fluid p-formgrid p-grid">
+                            <div class="p-field p-col">
+                                <label for="dtc">date contrat </label>
+                                <input id="dtc"  name="j1" type="date"  [(ngModel)]="contrat.dtc" pInputText required autofocus /> 
+                                  <small class="p-error" *ngIf="submitted && !contrat.dtc">champ required.</small>
+                            </div>
+                          
+                            <div class="p-field p-col">
+                                <label for="dtd">date debut </label>
+                                <input id="dtd"  name="n1" type="date"  [(ngModel)]="contrat.dtd" pInputText required autofocus /> 
+                                  <small class="p-error" *ngIf="submitted && !contrat.dtd">champ required.</small>
+                            </div>
+                            </div>
+                            <div class="p-fluid p-formgrid p-grid">
+                               
+
+                                <div class="p-field p-col">
+                                    <label for="dte">date edition</label>
+                                    <input id="dte"  name="m1"  type="date"  [(ngModel)]="contrat.dte" pInputText required autofocus /> 
+                                    <small class="p-error" *ngIf="submitted && !contrat.dte">champ required.</small>
+                                </div>
+                           
+                                <div class="p-field p-col">
+                                    <label for="dtf">date fin </label>
+                                    <input id="dtf"  name="p1" type="date"  [(ngModel)]="contrat.dtf" pInputText required autofocus /> 
+                                      <small class="p-error" *ngIf="submitted && !contrat.dtf">champ required.</small>
+                                </div>
+                                </div>
+                                    
+
+
+
+
+
+             </div>
+
+
+             <div class="card">
+                <p-toolbar styleClass="p-mb-4">
+                 <h5 class="p-m-0">Type contrat</h5>
+                     </p-toolbar>
+
+
+
+                     <div class="p-fluid p-formgrid p-grid">
+                        <div class="p-field p-col">
+                            <label for="typec">type contrat</label>
+                            <input id="typec"  name="q1"  type="text"  [(ngModel)]="contrat.typec" pInputText required autofocus /> 
+                            <small class="p-error" *ngIf="submitted && !contrat.typec">champ required.</small>
+                        </div>
+                        <div class="p-field p-col">
+                            <label for="etatc">etat contrat </label>
+                            <input id="etatc"  name="r1" type="text"  [(ngModel)]="contrat.etatc" pInputText required autofocus /> 
+                              <small class="p-error" *ngIf="submitted && !contrat.etatc">champ required.</small>
+                        </div>
+                        </div>
+
+                        <div class="p-fluid p-formgrid p-grid">
+                            <div class="p-field p-col">
+                                <label for="observation">observation</label>
+                                <input id="observation"  name="s1"  type="text"  [(ngModel)]="contrat.observation" pInputText required autofocus /> 
+                                <small class="p-error" *ngIf="submitted && !contrat.observation">champ required.</small>
+                            </div>
+                         </div>
+
+
+
+
+
+                     </div>
+                     <p-divider></p-divider>
+
+                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" *ngIf="authService.isAdmin()" (click)="hideDialog()"></button>
+                   <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="insertData()"></button>
+    <p-divider></p-divider>
+
+</ng-template></p-dialog>
+
+<p-toast></p-toast>
+
+<div class="card">
+
+
+    <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2" (click)="openNew()"></button>
+           
+        </ng-template>
+
+    </p-toolbar>
+
+                     <p-table #dt [value]="contrats"  [globalFilterFields]="['dtc']">
+                        <ng-template pTemplate="caption">
+                        
+                            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+   
+                                <h5 class="p-m-0">Contrat</h5>
+                                <div class="search-input-wrapper">
+                                <span class="p-input-icon-left">
+                                <p-button icon="pi pi-search"></p-button>
+                                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                                </span>
+                       </div>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>nom</th>
+                                <th>registre_com</th>
+                                <th>telephone</th>
+                                <th>fax</th>
+                                <th>mail</th>
+                                <th>impot</th>
+                                <th>numero</th>
+                                <th>societe service</th>
+                                <th>employe</th>
+                                <th>num_tel_emp</th>
+                                <th>date_contrat</th>
+                                <th>societe</th>
+                                <th>code postale emp</th>
+                                <th>date_edi</th>
+                                <th>date_deb</th>
+                                <th>adresse_emp</th>
+                                <th>date_fin</th>
+                                <th>Type_c</th>
+                                <th>Etat_c</th>
+                                <th>obser</th>
+                                <th>options</th>
+                              
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-contrat>
+                            <tr>
+                                <td>{{contrat.nom}}</td>
+                                 <td>{{contrat.regcom}}</td>
+                                <td>{{contrat.tel}}</td>
+                                <td>{{contrat.fax}}</td>
+                                <td>{{contrat.mail}}</td>
+                                <td>{{contrat.impot}}</td>       
+                                <td>{{contrat.numero}}</td>
+                                <td>{{contrat.societeecont}}</td>
+                                <td>{{contrat.employecont}}</td>
+                                <td>{{contrat.nte}}</td>
+                                <td>{{contrat.dtc}}</td>
+                                <td>{{contrat.societecont}}</td>
+                                <td>{{contrat.codepe}}</td>
+                                <td>{{contrat.dte}}</td> 
+                                <td>{{contrat.dtd}}</td>
+                                <td>{{contrat.adre}}</td>
+                                <td>{{contrat.dtf}}</td>
+                                <td>{{contrat.typec}}</td>
+                                <td>{{contrat.etatc}}</td>
+                                <td>{{contrat.observation}}</td>
+                               
+                               
+                                <td>
+                                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2"   *ngIf="authService.isAdmin()" (click)="editContrat(contrat)"></button>
+                                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning"  *ngIf="authService.isAdmin()" (click)="deleteData(contrat.id)"></button>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="summary">
+                            <div class="p-d-flex p-ai-center p-jc-between">
+                                In total there are {{contrats ? contrats.length : 0 }} contrats.
+                            </div>
+                        </ng-template>
+                    </p-table>
+                    </div>
+                    
+                    
+                    <p-dialog [(visible)]="updatecontratDialog" [style]="{width: '80%'}" header="contrat Details" [modal]="true" styleClass="p-fluid">
+                        <ng-template pTemplate="content"  *ngIf="authService.isAdmin()" (ngsubmit)="updateData()">
+                           
+                          
+                
+                
+                         
+<div class="card">
+    <p-toolbar styleClass="p-mb-4">
+     <h5 class="p-m-0">Societe services</h5>
+         </p-toolbar>
+
+<div class="p-fluid p-formgrid p-grid">
+    <div class="p-field p-col">
+                  
+        <label for="societeecont">societe service </label>
+         <p-dropdown [options]="societes" [(ngModel)]="selectedSocietee" optionLabel="nom" [(ngModel)]="contrat.societeecont" (onChange)="onSocieteeChange($event)" optionValue="id"></p-dropdown> 
+                
+    </div>
+  
+    <div class="p-field p-col">
+        <label for="regcom">Registre commerciale</label>
+        <input id="regcom"  name="b1" type="text"  [(ngModel)]="contrat.regcom" pInputText required autofocus /> 
+          <small class="p-error" *ngIf="submitted && !contrat.regcom">champ required.</small>
+    </div>
+    </div>
+
+    <div class="p-fluid p-formgrid p-grid">
+        <div class="p-field p-col">
+            <label for="tel">Telephone</label>
+            <input id="tel"  name="c1"  type="number"  [(ngModel)]="contrat.tel" pInputText required autofocus /> 
+            <small class="p-error" *ngIf="submitted && !contrat.tel">champ required.</small>
+        </div>
+        <div class="p-field p-col">
+            <label for="fax">fax </label>
+            <input id="fax"  name="d1" type="text"  [(ngModel)]="contrat.fax" pInputText required autofocus /> 
+              <small class="p-error" *ngIf="submitted && !contrat.fax">champ required.</small>
+        </div>
+        </div>
+
+        <div class="p-fluid p-formgrid p-grid">
+            <div class="p-field p-col">
+                <label for="mail">mail</label>
+                <input id="mail"  name="e1"  type="mail"  [(ngModel)]="contrat.mail" pInputText required autofocus /> 
+                <small class="p-error" *ngIf="submitted && !contrat.mail">champ required.</small>
+            </div>
+            <div class="p-field p-col">
+                <label for="impot">impot </label>
+                <input id="impot"  name="f1" type="text"  [(ngModel)]="contrat.impot" pInputText required autofocus /> 
+                  <small class="p-error" *ngIf="submitted && !contrat.impot">champ required.</small>
+            </div>
+            </div>
+
+
+    </div>
+
+    <div class="card">
+        <p-toolbar styleClass="p-mb-4">
+         <h5 class="p-m-0">Contrat</h5>
+             </p-toolbar>
+
+             <div class="p-fluid p-formgrid p-grid">
+                <div class="p-field p-col">
+                    <label for="numero">numero</label>
+                    <input id="numero"  name="g1"  type="number"  [(ngModel)]="contrat.numero" pInputText required autofocus /> 
+                    <small class="p-error" *ngIf="submitted && !contrat.numero">champ required.</small>
+                </div>
+                <div class="p-field p-col">
+                    <label for="societecont">societe</label>
+                    <p-dropdown [options]="societees" [(ngModel)]="selectedSociete" optionLabel="code" [(ngModel)]="contrat.societecont" (onChange)="onSocieteChange($event)" optionValue="id"></p-dropdown> 
+                    
+                  
+                </div>
+              
+
+
+                </div>
+
+                <div class="p-fluid p-formgrid p-grid">
+                    <div class="p-field p-col">
+                        <label for="employecont">employe</label>
+                        <p-dropdown [options]="empolyees" [(ngModel)]="selectedEmploye" optionLabel="mat" [(ngModel)]="contrat.employecont" (onChange)="onEmployeChange($event)" optionValue="id"></p-dropdown> 
+                       
+                        
+                     </div>
+                    
+                     <div class="p-field p-col">
+                        <label for="adre">adresse employe</label>
+                        <input id="adre"  name="o1"  type="text"  [(ngModel)]="contrat.adre" pInputText required autofocus /> 
+                        <small class="p-error" *ngIf="submitted && !contrat.adre">champ required.</small>
+                    </div>
+
+                    </div>
+        
+                    <div class="p-fluid p-formgrid p-grid">
+                        <div class="p-field p-col">
+                            <label for="codepe">code postal employe </label>
+                            <input id="codepe"  name="l1" type="text"  [(ngModel)]="contrat.codepe" pInputText required autofocus /> 
+                              <small class="p-error" *ngIf="submitted && !contrat.codepe">champ required.</small>
+                        </div>
+                      
+
+                        
+
+                        <div class="p-field p-col">
+                            <label for="nte">numero tel employee</label>
+                            <input id="nte"  name="i1"  type="number"  [(ngModel)]="contrat.nte" pInputText required autofocus /> 
+                            <small class="p-error" *ngIf="submitted && !contrat.nte">champ required.</small>
+                        </div>
+
+
+
+
+
+
+                        <div class="p-field p-col">
+                            <label for="nom">Nom</label>
+                            <input id="nom"  name="a1"  type="text"  [(ngModel)]="contrat.nom" pInputText required autofocus /> 
+                            <small class="p-error" *ngIf="submitted && !contrat.nom">champ required.</small>
+                        </div>
+
+                        </div>
+            
+                        <div class="p-fluid p-formgrid p-grid">
+                            <div class="p-field p-col">
+                                <label for="dtc">date contrat </label>
+                                <input id="dtc"  name="j1" type="date"  [(ngModel)]="contrat.dtc" pInputText required autofocus /> 
+                                  <small class="p-error" *ngIf="submitted && !contrat.dtc">champ required.</small>
+                            </div>
+                          
+                            <div class="p-field p-col">
+                                <label for="dtd">date debut </label>
+                                <input id="dtd"  name="n1" type="date"  [(ngModel)]="contrat.dtd" pInputText required autofocus /> 
+                                  <small class="p-error" *ngIf="submitted && !contrat.dtd">champ required.</small>
+                            </div>
+                            </div>
+                            <div class="p-fluid p-formgrid p-grid">
+                               
+
+                                <div class="p-field p-col">
+                                    <label for="dte">date edition</label>
+                                    <input id="dte"  name="m1"  type="date"  [(ngModel)]="contrat.dte" pInputText required autofocus /> 
+                                    <small class="p-error" *ngIf="submitted && !contrat.dte">champ required.</small>
+                                </div>
+                           
+                                <div class="p-field p-col">
+                                    <label for="dtf">date fin </label>
+                                    <input id="dtf"  name="p1" type="date"  [(ngModel)]="contrat.dtf" pInputText required autofocus /> 
+                                      <small class="p-error" *ngIf="submitted && !contrat.dtf">champ required.</small>
+                                </div>
+                                </div>
+                                    
+
+
+
+
+
+             </div>
+
+
+             <div class="card">
+                <p-toolbar styleClass="p-mb-4">
+                 <h5 class="p-m-0">Type contrat</h5>
+                     </p-toolbar>
+
+
+
+                     <div class="p-fluid p-formgrid p-grid">
+                        <div class="p-field p-col">
+                            <label for="typec">type contrat</label>
+                            <input id="typec"  name="q1"  type="text"  [(ngModel)]="contrat.typec" pInputText required autofocus /> 
+                            <small class="p-error" *ngIf="submitted && !contrat.typec">champ required.</small>
+                        </div>
+                        <div class="p-field p-col">
+                            <label for="etatc">etat contrat </label>
+                            <input id="etatc"  name="r1" type="text"  [(ngModel)]="contrat.etatc" pInputText required autofocus /> 
+                              <small class="p-error" *ngIf="submitted && !contrat.etatc">champ required.</small>
+                        </div>
+                        </div>
+
+                        <div class="p-fluid p-formgrid p-grid">
+                            <div class="p-field p-col">
+                                <label for="observation">observation</label>
+                                <input id="observation"  name="s1"  type="text"  [(ngModel)]="contrat.observation" pInputText required autofocus /> 
+                                <small class="p-error" *ngIf="submitted && !contrat.observation">champ required.</small>
+                            </div>
+                         </div>
+
+
+
+
+
+                     </div>
+                
+                        </ng-template>
+                    
+                        
+                    
+                        <ng-template pTemplate="footer">
+                            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+                            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="updateData()"></button>
+                       
+                        </ng-template>
+                    
+                    </p-dialog>
+                    <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+                    </div></div>

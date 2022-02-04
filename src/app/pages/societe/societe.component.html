@@ -1,0 +1,331 @@
+<div class="p-grid">
+    <div class="p-col-12">
+<p-toast></p-toast>
+
+<div class="card">
+    <p-toolbar styleClass="p-mb-4">
+        <ng-template pTemplate="left">
+            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success p-mr-2"  (click)="openNew()"></button>
+            <button pButton pRipple label="Delete" icon="pi pi-trash" class="p-button-danger" *ngIf="authService.isAdmin()" (click)="deleteSelectedSocietes()" [disabled]="!selectedsocietes || !selectedsocietes.length"></button>
+        </ng-template>
+
+       
+    </p-toolbar>
+
+    <p-table  #dt [value]="societes" [rows]="10" [paginator]="true" [globalFilterFields]="['code']"
+    [(selection)]="selectedsocietes" [rowHover]="true" dataKey="id"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [showCurrentPageReport]="true">
+
+
+        <ng-template pTemplate="caption">
+
+            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between table-header">
+
+                <h5 class="p-m-0">Societe</h5>
+                <div class="search-input-wrapper">
+                <span class="p-input-icon-left">
+                <p-button icon="pi pi-search"></p-button>
+                <input pInputText type="text" (input)="dt.filterGlobal($event.target.value, 'contains')" placeholder="Search..." />
+                </span>
+</div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+
+                <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th  pSortableColumn="code">code<p-sortIcon field="code"></p-sortIcon></th>
+                <th  pSortableColumn="nom">nom<p-sortIcon field="nom"></p-sortIcon></th>
+                <th  pSortableColumn="adresse">adresse<p-sortIcon field="adresse"></p-sortIcon></th>
+                <th  pSortableColumn="tel">telephone<p-sortIcon field="tel"></p-sortIcon></th>
+               
+                <th  pSortableColumn="registre_de_commerce">reg_de_com<p-sortIcon field="registre_de_commerce"></p-sortIcon></th>
+                <th  pSortableColumn="code_postale">code_postale<p-sortIcon field="code_postale"></p-sortIcon></th>
+                <th  pSortableColumn="ville">ville<p-sortIcon field="ville"></p-sortIcon></th>
+                <th  pSortableColumn="fax">fax<p-sortIcon field="fax"></p-sortIcon></th>
+                <th  pSortableColumn="email">email<p-sortIcon field="email"></p-sortIcon></th>
+                <th  pSortableColumn="impot">impot<p-sortIcon field="impot"></p-sortIcon></th>
+                <th  pSortableColumn="num_cnss">num_cnss<p-sortIcon field="num_cnss"></p-sortIcon></th>
+                <th  pSortableColumn="rib">rib<p-sortIcon field="rib"></p-sortIcon></th>
+                <th  pSortableColumn="mode_gc">mode_gc<p-sortIcon field="mode_gc"></p-sortIcon></th>
+                <th  pSortableColumn="droit_conge">droit_conge<p-sortIcon field="droit_conge"></p-sortIcon></th>
+                <th  pSortableColumn="code_exp">code_exp<p-sortIcon field="code_exp"></p-sortIcon></th>
+                <th  pSortableColumn="retenu">retenu<p-sortIcon field="retenu"></p-sortIcon></th>
+                  <th>options</th>
+            </tr>
+        </ng-template>
+
+
+        <ng-template pTemplate="body"  let-societe >
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="societe"></p-tableCheckbox>
+                </td>
+               
+                <td>{{societe.code}}</td>
+                <td>{{societe.nom}}</td>
+                <td>{{societe.adresse}}</td>
+                <td>{{societe.tel}}</td>
+              
+                <td>{{societe.registre_de_commerce}}</td>
+                <td>{{societe.code_postale}}</td>
+                <td>{{societe.ville}}</td>
+                <td>{{societe.fax}}</td>
+                <td>{{societe.email}}</td>
+                <td>{{societe.impot}}</td>
+                <td>{{societe.num_cnss}}</td>
+                <td>{{societe.rib}}</td>
+                <td>{{societe.mode_gc}}</td>
+                <td>{{societe.droit_conge}}</td>
+                <td>{{societe.code_exp}}</td>
+                <td>{{societe.retenu}}</td>
+               
+
+                <td>
+                    <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success p-mr-2" (click)="editSociete(societe)"></button>
+                    <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteData(societe.id)"></button>
+                </td>
+             </tr>
+        </ng-template>
+
+        <ng-template pTemplate="summary">
+            <div class="p-d-flex p-ai-center p-jc-between">
+                In total there are {{societes ? societes.length : 0 }} societes.
+            </div>
+        </ng-template>
+   
+
+</p-table>
+
+ </div>
+
+
+ <p-dialog [(visible)]="societeDialog" [style]="{width: '70%'}" header="societe Details" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content" *ngIf="authService.isAdmin()">
+       
+       
+
+        <div class="p-field">
+            <label for="code">code</label>
+            <input type="text" pInputText id="code" [(ngModel)]="societe.code" required autofocus />
+            <small class="p-error" *ngIf="submitted && !societe.code">code is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="nom">nom</label>
+            <input type="text" pInputText id="nom" [(ngModel)]="societe.nom" required autofocus />
+            <small class="p-error" *ngIf="submitted && !societe.nom">nom is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="adresse">adresse</label>
+            <input type="text" pInputText id="adresse" [(ngModel)]="societe.adresse" required autofocus />
+            <small class="p-error" *ngIf="submitted && !societe.adresse">adresse is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="tel">tel</label>
+            <input type="number" pInputText id="tel" [(ngModel)]="societe.tel" required autofocus />
+            <small class="p-error" *ngIf="submitted && !societe.tel">tel is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="registre_de_commerce">registre_de_commerce</label>
+            <input type="text" pInputText id="registre_de_commerce" [(ngModel)]="societe.registre_de_commerce" required autofocus />
+            <small class="p-error" *ngIf="submitted && !societe.registre_de_commerce">registre_de_commerce is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="code_postale">code_postale</label>
+            <input type="text" pInputText id="code_postale" [(ngModel)]="societe.code_postale" required autofocus />
+            <small class="p-error" *ngIf="submitted && !societe.code_postale">code_postale is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="ville">ville</label>
+            <input type="text" pInputText id="ville" [(ngModel)]="societe.ville" required autofocus />
+            <small class="p-error" *ngIf="submitted && !societe.ville">ville is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="fax">fax</label>
+            <input type="text" pInputText id="fax" [(ngModel)]="societe.fax" required autofocus />
+            <small class="p-error" *ngIf="submitted && !societe.fax">fax is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="email">email</label>
+            <input type="email" pInputText id="email" [(ngModel)]="societe.email" required autofocus />
+            <small class="p-error" *ngIf="submitted && !societe.email">email is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="impot">impot</label>
+            <input type="text" pInputText id="impot" [(ngModel)]="societe.impot" required autofocus />
+            <small class="p-error" *ngIf="submitted && !societe.impot">impot is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="num_cnss">num_cnss</label>
+            <input type="number" pInputText id="num_cnss" [(ngModel)]="societe.num_cnss" required autofocus />
+            <small class="p-error" *ngIf="submitted && !societe.num_cnss">num_cnss is required.</small>
+        </div>
+
+        <div class="p-field">
+            <label for="rib">rib</label>
+            <input type="text" pInputText id="rib" [(ngModel)]="societe.rib" required autofocus />
+            <small class="p-error" *ngIf="submitted && !societe.rib">rib is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="mode_gc">mode_gc</label>
+            <input type="text" pInputText id="mode_gc" [(ngModel)]="societe.mode_gc" required autofocus />
+            <small class="p-error" *ngIf="submitted && !societe.mode_gc">mode_gc is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="droit_conge">droit_conge</label>
+            <input type="text" pInputText id="droit_conge" [(ngModel)]="societe.droit_conge" required autofocus />
+            <small class="p-error" *ngIf="submitted && !societe.droit_conge">droit_conge is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="code_exp">code_exp</label>
+            <input type="text" pInputText id="code_exp" [(ngModel)]="societe.code_exp" required autofocus />
+            <small class="p-error" *ngIf="submitted && !societe.code_exp">code_exp is required.</small>
+        </div>
+        <div class="p-field">
+            <label for="retenu">retenu</label>
+            <input type="text" pInputText id="retenu" [(ngModel)]="societe.retenu" required autofocus />
+            <small class="p-error" *ngIf="submitted && !societe.retenu">retenu is required.</small>
+        </div>
+
+      
+
+    
+           
+          
+
+
+         
+
+      
+   
+   
+   
+           
+
+    </ng-template>
+
+    
+
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+        <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" *ngIf="authService.isAdmin()" (click)="insertData()"></button>
+   
+    </ng-template>
+
+    </p-dialog>
+
+    <p-dialog [(visible)]="updateSocieteDialog" [style]="{width: '450px'}" header="societe Details" [modal]="true" styleClass="p-fluid">
+        <ng-template pTemplate="content" *ngIf="authService.isAdmin()" (ngsubmit)="updateData()">
+           
+            <div class="p-field">
+                <label for="code">code</label>
+                <input type="text" pInputText id="code" [(ngModel)]="societe.code" required autofocus />
+                <small class="p-error" *ngIf="submitted && !societe.code">code is required.</small>
+            </div>
+            <div class="p-field">
+                <label for="nom">nom</label>
+                <input type="text" pInputText id="nom" [(ngModel)]="societe.nom" required autofocus />
+                <small class="p-error" *ngIf="submitted && !societe.nom">nom is required.</small>
+            </div>
+            <div class="p-field">
+                <label for="adresse">adresse</label>
+                <input type="text" pInputText id="adresse" [(ngModel)]="societe.adresse" required autofocus />
+                <small class="p-error" *ngIf="submitted && !societe.adresse">adresse is required.</small>
+            </div>
+            <div class="p-field">
+                <label for="tel">tel</label>
+                <input type="number" pInputText id="tel" [(ngModel)]="societe.tel" required autofocus />
+                <small class="p-error" *ngIf="submitted && !societe.tel">tel is required.</small>
+            </div>
+            <div class="p-field">
+                <label for="registre_de_commerce">registre de commerce</label>
+                <input type="text" pInputText id="registre_de_commerce" [(ngModel)]="societe.registre_de_commerce" required autofocus />
+                <small class="p-error" *ngIf="submitted && !societe.registre_de_commerce">registre_de_commerce is required.</small>
+            </div>
+            <div class="p-field">
+                <label for="code_postale">code postale</label>
+                <input type="text" pInputText id="code_postale" [(ngModel)]="societe.code_postale" required autofocus />
+                <small class="p-error" *ngIf="submitted && !societe.code_postale">code postale is required.</small>
+            </div>
+            <div class="p-field">
+                <label for="ville">ville</label>
+                <input type="text" pInputText id="ville" [(ngModel)]="societe.ville" required autofocus />
+                <small class="p-error" *ngIf="submitted && !societe.ville">ville is required.</small>
+            </div>
+            <div class="p-field">
+                <label for="fax">fax</label>
+                <input type="text" pInputText id="fax" [(ngModel)]="societe.fax" required autofocus />
+                <small class="p-error" *ngIf="submitted && !societe.fax">fax is required.</small>
+            </div>
+            <div class="p-field">
+                <label for="email">email</label>
+                <input type="email" pInputText id="email" [(ngModel)]="societe.email" required autofocus />
+                <small class="p-error" *ngIf="submitted && !societe.email">email is required.</small>
+            </div>
+            <div class="p-field">
+                <label for="impot">impot</label>
+                <input type="text" pInputText id="impot" [(ngModel)]="societe.impot" required autofocus />
+                <small class="p-error" *ngIf="submitted && !societe.impot">impot is required.</small>
+            </div>
+            <div class="p-field">
+                <label for="num_cnss">num_cnss</label>
+                <input type="number" pInputText id="num_cnss" [(ngModel)]="societe.num_cnss" required autofocus />
+                <small class="p-error" *ngIf="submitted && !societe.num_cnss">num_cnss is required.</small>
+            </div>
+    
+            <div class="p-field">
+                <label for="rib">rib</label>
+                <input type="text" pInputText id="rib" [(ngModel)]="societe.rib" required autofocus />
+                <small class="p-error" *ngIf="submitted && !societe.rib">rib is required.</small>
+            </div>
+            <div class="p-field">
+                <label for="mode_gc">mode_gc</label>
+                <input type="text" pInputText id="mode_gc" [(ngModel)]="societe.mode_gc" required autofocus />
+                <small class="p-error" *ngIf="submitted && !societe.mode_gc">mode_gc is required.</small>
+            </div>
+            <div class="p-field">
+                <label for="droit_conge">droit_conge</label>
+                <input type="text" pInputText id="droit_conge" [(ngModel)]="societe.droit_conge" required autofocus />
+                <small class="p-error" *ngIf="submitted && !societe.droit_conge">droit_conge is required.</small>
+            </div>
+            <div class="p-field">
+                <label for="code_exp">code_exp</label>
+                <input type="text" pInputText id="code_exp" [(ngModel)]="societe.code_exp" required autofocus />
+                <small class="p-error" *ngIf="submitted && !societe.code_exp">code_exp is required.</small>
+            </div>
+            <div class="p-field">
+                <label for="retenu">retenu</label>
+                <input type="text" pInputText id="retenu" [(ngModel)]="societe.retenu" required autofocus />
+                <small class="p-error" *ngIf="submitted && !societe.retenu">retenu is required.</small>
+            </div>
+    
+          
+    
+        
+               
+              
+    
+    
+             
+    
+          
+       
+       
+       
+               
+    
+        </ng-template>
+    
+    
+        <ng-template pTemplate="footer">
+            <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+            <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="updateData()"></button>
+       
+        </ng-template>
+    
+    </p-dialog>
+    <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+    </div></div>
+

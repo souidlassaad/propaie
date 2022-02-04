@@ -1,0 +1,100 @@
+{
+    "data":
+    [
+        {
+            "data":{
+                "nombouton":"Parametre",
+                "Access":""
+               
+            },
+            "children":[
+                {
+                    "data":{
+                        "nombouton":"parametre",
+                        "Access":""
+                     
+                    }
+               
+                   
+                }
+            ]
+        },
+              
+
+
+               {
+                    "data":{
+                        "nombouton":"Utilisateur",
+                        "Access":""
+                       
+                             },
+                    "children":[
+                        {
+                            "data":{
+                                "nombouton":"Gestion d'accees",
+                                "Access":""
+                            }
+                                  },
+                                  {
+                                  "data":{
+                                    "nombouton":"utilisateur",
+                                    "Access":""
+                                  }
+                                      },
+                                      {
+                                      "data":{
+                                        "nombouton":"Type dutilisateur",
+                                        "Access":""
+                                      
+                                          }
+                                        
+
+
+
+
+
+
+
+
+                        }
+                               ]
+                 },
+
+
+
+
+
+               { 
+                    "data":{
+                    "nombouton":"pointage et affectation",
+                    "Access":""
+                  
+                      },
+                      "children":[
+                        {
+                            "data":{
+                                "nombouton":"pointage et affectation",
+                                "Access":""
+                              
+                                  }  
+                        }
+                      ]
+                    }
+         
+                 
+
+
+
+
+
+
+
+
+
+
+
+
+        
+             
+    ]
+}
